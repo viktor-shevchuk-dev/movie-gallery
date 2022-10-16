@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client": "npm start --prefix client",
+    "install-server": "cd server && npm install",
+    "install-client": "cd client && npm install",
+    "install": "npm install concurrently --save-dev && npm run install-client && npm run install-server",
     "server": "npm run watch --prefix server",
+    "client": "npm start --prefix client",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "deploy": "npm run build --prefix client && npm start --prefix server"
   },
