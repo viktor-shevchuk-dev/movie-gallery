@@ -1,21 +1,46 @@
 {
-  "name": "nasa-project",
+  "name": "netflix-roulette",
   "version": "1.0.0",
-  "description": "",
+  "description": "Movies project.",
   "main": "index.js",
   "scripts": {
     "install-server": "cd server && npm install",
     "install-client": "cd client && npm install",
-    "install": "npm install concurrently --save-dev && npm run install-client && npm run install-server",
+    "install": "npm i concurrently --save-dev && npm run install-client && npm run install-server",
     "server": "npm run watch --prefix server",
     "client": "npm start --prefix client",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
-    "deploy": "npm run build --prefix client && npm start --prefix server"
+    "deploy": "npm run build --prefix client && npm start --prefix server",
+    "test": "npm test --prefix server && npm test --prefix client",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^7.4.0"
+    "@typescript-eslint/eslint-plugin": "^5.40.1",
+    "@typescript-eslint/parser": "^5.40.1",
+    "concurrently": "^7.4.0",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Victor-page/netflix-roulette.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Victor-page/netflix-roulette/issues"
+  },
+  "homepage": "https://github.com/Victor-page/netflix-roulette#readme",
+  "lint-staged": {
+    "*.{js,mjs,jsx}": "eslint --cache --fix",
+    "*.{js,mjs,jsx,ts,tsx,css,scss,md}": "prettier --write"
   }
 }
