@@ -1,0 +1,27 @@
+button {
+  display: block;
+  border-radius: 4px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  font-family: Montserrat;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+}
+
+button.secondary {
+  max-width: 177px;
+  background: rgba(96, 96, 96, 0.68);
+  padding: 11px 18px;
+  font-weight: 600;
+  color: #f65261;
+}
+
+button.primary {
+  max-width: 233px;
+  background: #f65261;
+  color: #fff;
+  font-weight: 500;
+  padding: 18px 74px 15px 74px;
+}

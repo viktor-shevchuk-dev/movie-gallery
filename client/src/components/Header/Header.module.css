@@ -1,0 +1,27 @@
+.header {
+  min-height: 396px;
+  mix-blend-mode: normal;
+  backdrop-filter: blur(4.07742px);
+  background: linear-gradient(rgba(66, 66, 66, 0.3), rgba(66, 66, 66, 0.3)),
+    url("./bg.jpg");
+}
+
+.header-container {
+  padding: 20px 20px 0 20px;
+}
+
+.main-header {
+  margin-bottom: 35px;
+}
+
+@media screen and (min-width: 768px) {
+  .header-container {
+    padding: 20px 60px 0 60px;
+  }
+
+  .main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+}

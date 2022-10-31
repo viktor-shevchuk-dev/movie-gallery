@@ -1,0 +1,57 @@
+.movie-card {
+  margin-bottom: 51px;
+  transition: transform 0.3s ease-out;
+}
+
+.movie-card:hover {
+  transform: scale(1.01);
+}
+
+.link {
+  text-decoration: none;
+}
+
+.poster {
+  max-width: 323px;
+  margin-bottom: 20px;
+}
+
+.title-and-year {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.title {
+  margin: 0;
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: #ffffff;
+  opacity: 0.7;
+}
+
+.genres-list {
+  margin: 0;
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #ffffff;
+  opacity: 0.5;
+}
+
+.year {
+  margin: 0;
+  padding: 4px 8px 5px 8px;
+  border: 1px solid #979797;
+  border-radius: 4px;
+  font-family: "Montserrat";
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #ffffff;
+  opacity: 0.7;
+}
