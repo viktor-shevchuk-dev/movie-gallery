@@ -1,1 +1,1 @@
-export { default } from "./GeneralFilter.component";
+export * from "./GeneralFilter.component";

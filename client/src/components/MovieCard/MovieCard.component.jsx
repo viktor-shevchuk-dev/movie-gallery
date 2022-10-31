@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+
 import classes from "./MovieCard.module.css";
 
-const MovieCard = ({ src, title, genresList, id, year }) => (
+export const MovieCard = ({ src, title, genresList, id, year }) => (
   <li className={classes["movie-card"]}>
     <Link to={`movies/${id}`} className={classes.link}>
       <img src={src} alt={title} className={classes.poster} />
@@ -22,5 +23,3 @@ MovieCard.propTypes = {
   id: PropTypes.number.isRequired,
   year: PropTypes.number.isRequired,
 };
-
-export default MovieCard;

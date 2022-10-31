@@ -1,5 +1,5 @@
 .movie-card {
-  margin-bottom: 51px;
+  margin: 0 auto 51px auto;
   transition: transform 0.3s ease-out;
 }
 
@@ -54,4 +54,7 @@
   line-height: 17px;
   color: #ffffff;
   opacity: 0.7;
+}
+
+@media screen and (min-width: 768px) {
 }

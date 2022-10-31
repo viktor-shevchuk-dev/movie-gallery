@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import MoviesList from "components/MoviesList";
+import { MoviesList } from "components";
+
 import { fetchMovieDetails } from "services/movieshelf-api";
 import Status from "utils/state-machine";
 const { IDLE, PENDING, REJECTED, RESOLVED } = Status;
 
-const Movie = () => {
+export const Movie = () => {
   const { movieId } = useParams();
 
   const [movie, setMovie] = useState(null);
@@ -35,5 +36,3 @@ const Movie = () => {
     </>
   );
 };
-
-export default Movie;

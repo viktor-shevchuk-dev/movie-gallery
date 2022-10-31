@@ -1,14 +1,15 @@
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useNavigate, useLocation, createSearchParams } from "react-router-dom";
-import SortSelector from "components/SortSelector";
+
+import { SortSelector } from "components";
 
 const sortOptionsList = [
   { value: "release-date", label: "Release date" },
   { value: "title", label: "Title" },
 ];
 
-const GeneralFilter = ({ onSetSortOption }) => {
+export const GeneralFilter = ({ onSetSortOption }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const sortByURLSearchParam = new URLSearchParams(location.search).get(
@@ -55,5 +56,3 @@ const GeneralFilter = ({ onSetSortOption }) => {
 GeneralFilter.propTypes = {
   onSetSortOption: PropTypes.func.isRequired,
 };
-
-export default GeneralFilter;

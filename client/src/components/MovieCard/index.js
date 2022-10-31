@@ -1,1 +1,1 @@
-export { default } from "./MovieCard.component";
+export * from "./MovieCard.component";

@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useNavigate, useLocation, createSearchParams } from "react-router-dom";
+
 import classes from "./GenreFilter.module.css";
 
-const GenreFilter = ({ onSetGenreOption }) => {
+export const GenreFilter = ({ onSetGenreOption }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const genreURLSearchParam = new URLSearchParams(location.search).get("genre");
@@ -60,5 +61,3 @@ const GenreFilter = ({ onSetGenreOption }) => {
 GenreFilter.propTypes = {
   onSetGenreOption: PropTypes.func.isRequired,
 };
-
-export default GenreFilter;

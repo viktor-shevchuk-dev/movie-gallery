@@ -1,9 +1,8 @@
-import Navigation from "components/Navigation";
-import Button from "components/Button";
-import FindMovie from "components/FindMovie";
+import { Navigation, Button, FindMovie } from "components";
+
 import classes from "./Header.module.css";
 
-const Header = () => (
+export const Header = () => (
   <header className={classes.header}>
     <div className={`container ${classes["header-container"]}`}>
       <section className={classes["main-header"]}>
@@ -14,5 +13,3 @@ const Header = () => (
     </div>
   </header>
 );
-
-export default Header;

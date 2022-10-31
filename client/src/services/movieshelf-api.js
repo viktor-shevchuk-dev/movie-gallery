@@ -8,11 +8,8 @@ const fetchWithErrorHandling = async (url = "", config = {}) => {
     : Promise.reject(new Error("Not found"));
 };
 
-export const fetchMovies = async () => {
-  const test = fetchWithErrorHandling(`${BASE_URL}/movies`);
-
-  return await test;
-};
+export const fetchMovies = async () =>
+  fetchWithErrorHandling(`${BASE_URL}/movies`);
 
 export const fetchMovieDetails = (movieId) =>
   fetchWithErrorHandling(`${BASE_URL}/movies/${movieId}`);

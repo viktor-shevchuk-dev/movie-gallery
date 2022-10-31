@@ -1,7 +1,6 @@
 .genres-filter-list {
   padding: 0;
   margin: 0;
-  display: flex;
 }
 
 .genres-filter-list li:not(:last-child) {
@@ -16,4 +15,10 @@
   line-height: 20px;
   text-transform: uppercase;
   color: #ffffff;
+}
+
+@media screen and (min-width: 1024px) {
+  .genres-filter-list {
+    display: flex;
+  }
 }

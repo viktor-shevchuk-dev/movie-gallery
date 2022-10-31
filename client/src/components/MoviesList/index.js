@@ -1,1 +1,1 @@
-export { default } from "./MoviesList.component";
+export * from "./MoviesList.component";
