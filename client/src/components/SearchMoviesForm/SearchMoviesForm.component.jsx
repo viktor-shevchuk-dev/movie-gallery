@@ -2,10 +2,11 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import PropTypes from "prop-types";
 
-import classes from "./SearchMoviesForm.module.css";
-import Button from "components/Button";
+import { Button } from "components";
 
-const SearchMoviesForm = ({ onSubmit }) => {
+import classes from "./SearchMoviesForm.module.css";
+
+export const SearchMoviesForm = ({ onSubmit }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleQueryChange = ({ target: { value } }) => {
@@ -32,7 +33,9 @@ const SearchMoviesForm = ({ onSubmit }) => {
         placeholder="What do you want to watch?"
         className={classes.input}
       />
-      <Button type="submit">Search</Button>
+      <Button type="submit" primary>
+        Search
+      </Button>
     </form>
   );
 };
@@ -40,5 +43,3 @@ const SearchMoviesForm = ({ onSubmit }) => {
 SearchMoviesForm.propTypes = {
   onSubmit: PropTypes.func,
 };
-
-export default SearchMoviesForm;

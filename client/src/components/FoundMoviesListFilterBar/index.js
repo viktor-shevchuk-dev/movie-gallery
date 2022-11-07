@@ -1,1 +1,1 @@
-export { default } from "./FoundMoviesListFilterBar.component";
+export * from "./FoundMoviesListFilterBar.component";

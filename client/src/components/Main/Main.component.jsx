@@ -1,13 +1,18 @@
 import { useState, useEffect } from "react";
+
+import {
+  MoviesList,
+  FoundMoviesListFilterBar,
+  ErrorBoundary,
+} from "components";
+
 import classes from "./Main.module.css";
+
 import { fetchMovies } from "services/movieshelf-api";
-import MoviesList from "components/MoviesList";
-import FoundMoviesListFilterBar from "components/FoundMoviesListFilterBar";
 import Status from "utils/state-machine";
-import ErrorBoundary from "components/ErrorBoundary";
 const { IDLE, PENDING, REJECTED, RESOLVED } = Status;
 
-const Main = () => {
+export const Main = () => {
   const [foundMovies, setFoundMovies] = useState([]);
   const [status, setStatus] = useState(IDLE);
   const [error, setError] = useState(null);
@@ -71,5 +76,3 @@ const Main = () => {
     </main>
   );
 };
-
-export default Main;

@@ -1,1 +1,1 @@
-export { default } from "./FindMovie.component";
+export * from "./FindMovie.component";

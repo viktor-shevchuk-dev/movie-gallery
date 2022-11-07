@@ -1,1 +1,1 @@
-export { default } from "./GenreFilter.component";
+export * from "./GenreFilter.component";

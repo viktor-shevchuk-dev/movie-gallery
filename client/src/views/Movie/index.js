@@ -1,1 +1,1 @@
-export { default } from "./Movie.view";
+export * from "./Movie.view";

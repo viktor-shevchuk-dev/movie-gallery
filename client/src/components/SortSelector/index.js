@@ -1,1 +1,1 @@
-export { default } from "./SortSelector.component";
+export * from "./SortSelector.component";

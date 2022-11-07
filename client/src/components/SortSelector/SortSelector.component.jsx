@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
+
 import classes from "./SortSelector.module.css";
 
-const SortSelector = ({ options, value, onChange, label }) => (
+export const SortSelector = ({ options, value, onChange, label }) => (
   <div className={classes["sort-selector"]}>
     <label className={classes.label} htmlFor={label}>
       Sort by
@@ -27,5 +28,3 @@ SortSelector.propTypes = {
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
 };
-
-export default SortSelector;

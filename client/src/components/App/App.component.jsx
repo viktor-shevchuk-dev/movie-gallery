@@ -1,15 +1,13 @@
 import { Routes as RoutesList, Route } from "react-router-dom";
 
-import Home from "views/Home";
-import Movie from "views/Movie";
-import NotFound from "views/NotFound";
+import { Home, Movie, NotFound } from "views";
 
-const App = () => (
-  <RoutesList>
-    <Route path="/" element={<Home />} />
-    <Route path="movies/:movieId" element={<Movie />} />
-    <Route path="*" element={<NotFound />} />
-  </RoutesList>
-);
-
-export default App;
+export const App = () => {
+  return (
+    <RoutesList>
+      <Route path="/" element={<Home />} />
+      <Route path="movies/:movieId" element={<Movie />} />
+      <Route path="*" element={<NotFound />} />
+    </RoutesList>
+  );
+};

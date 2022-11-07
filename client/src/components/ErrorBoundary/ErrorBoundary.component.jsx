@@ -1,6 +1,6 @@
 import { Component } from "react";
 
-class ErrorBoundary extends Component {
+export class ErrorBoundary extends Component {
   state = { hasError: false };
 
   static getDerivedStateFromError() {
@@ -20,5 +20,3 @@ class ErrorBoundary extends Component {
     );
   }
 }
-
-export default ErrorBoundary;

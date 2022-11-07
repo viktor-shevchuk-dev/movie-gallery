@@ -1,11 +1,10 @@
-import SearchMoviesForm from "components/SearchMoviesForm";
+import { SearchMoviesForm, Title } from "components";
+
 import classes from "./FindMovie.module.css";
 
-const FindMovie = () => (
+export const FindMovie = () => (
   <section className={classes["sub-header"]}>
-    <h1 className={classes.heading}>Find your movie</h1>
+    <Title>Find your movie</Title>
     <SearchMoviesForm />
   </section>
 );
-
-export default FindMovie;
