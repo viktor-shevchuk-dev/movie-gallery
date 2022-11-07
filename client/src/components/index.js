@@ -13,3 +13,8 @@ export * from "./MoviesList";
 export * from "./Navigation";
 export * from "./SearchMoviesForm";
 export * from "./SortSelector";
+export * from "./Modal";
+export * from "./Title";
+export * from "./Form";
+export * from "./ShowOptionsButton";
+export * from "./BaseSelect";

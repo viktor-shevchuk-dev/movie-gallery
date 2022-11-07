@@ -1,13 +1,14 @@
 .movie-card {
   margin: 0 auto 51px auto;
-  transition: transform 0.3s ease-out;
+  transition: transform 0.2s ease-out;
 }
 
 .movie-card:hover {
-  transform: scale(1.01);
+  transform: translateY(-2px);
 }
 
 .link {
+  position: relative;
   text-decoration: none;
 }
 
@@ -54,6 +55,31 @@
   line-height: 17px;
   color: #ffffff;
   opacity: 0.7;
+}
+
+.options-select[class$="container"] {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+}
+
+.options-select div[class$="control"] {
+  display: flex;
+  justify-content: end;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.options-select div[class$="menu"] {
+  width: 190px;
+  top: -10px;
+  right: 0px;
+}
+
+.confirm-button {
+  margin-left: auto;
 }
 
 @media screen and (min-width: 768px) {

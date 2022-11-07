@@ -33,7 +33,9 @@ export const SearchMoviesForm = ({ onSubmit }) => {
         placeholder="What do you want to watch?"
         className={classes.input}
       />
-      <Button type="submit">Search</Button>
+      <Button type="submit" primary>
+        Search
+      </Button>
     </form>
   );
 };

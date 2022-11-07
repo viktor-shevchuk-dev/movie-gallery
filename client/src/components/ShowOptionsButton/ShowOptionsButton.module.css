@@ -18,10 +18,7 @@
   color: #fff;
 }
 
-.inverted {
-  background-color: #232323;
-  color: #f65261;
-  border: 1.5px solid #f65261;
+.primary-reverted {
 }
 
 .secondary {
