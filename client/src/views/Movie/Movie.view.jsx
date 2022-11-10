@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { MoviesList } from "components";
+import { Header, Main } from "components";
 
 import { fetchMovieDetails } from "services/movieshelf-api";
 import Status from "utils/state-machine";
@@ -29,10 +29,14 @@ export const Movie = () => {
 
   return (
     <>
-      {status === PENDING && <p>Loading...</p>}
-      {status === REJECTED && <p>{error.message}</p>}
-      {status === RESOLVED && <p>{movie.title}</p>}
-      <MoviesList />
+      <Header>
+        <>
+          {status === PENDING && <p>Loading...</p>}
+          {status === REJECTED && <p>{error.message}</p>}
+          {status === RESOLVED && <p>{movie.title}</p>}
+        </>
+      </Header>
+      <Main />
     </>
   );
 };

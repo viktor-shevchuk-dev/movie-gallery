@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-import { Navigation, Button, FindMovie, Modal, Title, Form } from "components";
+import { Navigation, Button, Modal, Title, Form } from "components";
 
 import classes from "./Header.module.css";
 
-export const Header = () => {
+export const Header = ({ children }) => {
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => setShowModal((showModal) => !showModal);
@@ -25,7 +25,7 @@ export const Header = () => {
               + Add Movie
             </Button>
           </section>
-          <FindMovie />
+          {children}
         </div>
       </header>
     </>

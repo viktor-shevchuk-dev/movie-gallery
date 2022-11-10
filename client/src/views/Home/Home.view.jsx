@@ -1,8 +1,10 @@
-import { Header, Main, Footer } from "components";
+import { Header, Main, Footer, FindMovie } from "components";
 
 export const Home = () => (
   <>
-    <Header />
+    <Header>
+      <FindMovie />
+    </Header>
     <Main />
     <Footer />
   </>

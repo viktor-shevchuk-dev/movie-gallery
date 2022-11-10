@@ -18,3 +18,4 @@ export * from "./Title";
 export * from "./Form";
 export * from "./ShowOptionsButton";
 export * from "./BaseSelect";
+export * from "./FormControl";

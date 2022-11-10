@@ -1,15 +1,12 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-
-import { useInput } from "hooks";
 
 import { BaseSelect, Title, Modal, Form, Button } from "components";
 
 import classes from "./MovieCard.module.css";
 
 import { ReactComponent as ShowOptions } from "icons/three-dots.svg";
-import { validateSelect } from "validators";
 
 const optionsList = [
   { value: "edit", label: "Edit" },
@@ -17,25 +14,34 @@ const optionsList = [
 ];
 
 export const MovieCard = ({ src, title, genresList, id, year }) => {
-  const [showOptions, setShowOptions] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [optionValue, setOptionValue] = useState("");
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const ref = useRef(null);
 
   const toggleModal = () => setShowModal((showModal) => !showModal);
 
   const optionChangeHandler = (option) => {
     setOptionValue(option);
-    setShowOptions((showOptions) => !showOptions);
+    setMenuIsOpen((showOptions) => !showOptions);
     toggleModal();
-  };
-
-  const closeClickHandler = () => {
-    setShowOptions((showOptions) => !showOptions);
   };
 
   const deleteMovie = () => {
     console.log("delete");
   };
+
+  const toggleMenuIsOpen = (event) => {
+    setMenuIsOpen((menuIsOpen) => !menuIsOpen);
+    const { current: selectEl } = ref;
+    if (!selectEl) return;
+    menuIsOpen ? selectEl.blur() : selectEl.focus();
+  };
+
+  const handleMovieCardLinkClick = (event) =>
+    event.target !== event.currentTarget &&
+    ["svg", "DIV", "BUTTON"].includes(event.target.nodeName) &&
+    event.preventDefault();
 
   return (
     <>
@@ -62,20 +68,31 @@ export const MovieCard = ({ src, title, genresList, id, year }) => {
       )}
       <li className={classes["movie-card"]}>
         <Link
-          // to={`movies/${id}`}
+          to={`movies/${id}`}
           className={classes.link}
+          onClick={handleMovieCardLinkClick}
         >
           <img src={src} alt={title} className={classes.poster} />
+          {!menuIsOpen && (
+            <Button
+              onClick={toggleMenuIsOpen}
+              extraClassName={classes["show-options-button"]}
+            >
+              <ShowOptions />
+            </Button>
+          )}
           <BaseSelect
-            // menuIsOpen={showOptions}
+            isClosingMenu
+            selectRef={ref}
+            menuIsOpen={menuIsOpen}
             options={optionsList}
             id="genre"
             value={optionValue}
             onChange={optionChangeHandler}
             extraClassName={classes["options-select"]}
             dropdownIndicator={<ShowOptions />}
-            onCloseOptions={closeClickHandler}
             closeMenuOnSelect={true}
+            onCloseOptions={toggleMenuIsOpen}
           />
 
           <div className={classes["title-and-year"]}>

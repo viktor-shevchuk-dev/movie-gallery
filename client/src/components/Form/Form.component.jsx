@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import classNames from "classnames/bind";
+
 import { Button, BaseSelect } from "components";
 
 import { useInput, useLocalStorage } from "hooks";
@@ -91,9 +93,7 @@ export const Form = ({ movieId }) => {
     isGenreValid &&
     isRatingValid &&
     isTitleValid &&
-    isURLValid
-      ? true
-      : false;
+    isURLValid;
 
   const resetFields = () => {
     resetTitle();
@@ -123,10 +123,8 @@ export const Form = ({ movieId }) => {
     resetFields();
   };
 
-  const formControlClasses = (hasError) =>
-    hasError
-      ? `${classes["form-control"]} ${classes.invalid}`
-      : classes["form-control"];
+  const formControlClasses = (invalid) =>
+    classNames.bind(classes)("form-control", { invalid });
 
   const firstNameClasses = formControlClasses(hasTitleError);
   const urlClasses = formControlClasses(hasURLError);
