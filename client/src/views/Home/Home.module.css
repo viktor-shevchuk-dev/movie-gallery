@@ -1,0 +1,4 @@
+.home-header {
+  background: linear-gradient(rgba(66, 66, 66, 0.3), rgba(66, 66, 66, 0.3)),
+    url("./bg.jpg");
+}

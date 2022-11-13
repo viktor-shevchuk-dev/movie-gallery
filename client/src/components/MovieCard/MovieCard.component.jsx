@@ -68,7 +68,7 @@ export const MovieCard = ({ src, title, genresList, id, year }) => {
       )}
       <li className={classes["movie-card"]}>
         <Link
-          to={`movies/${id}`}
+          to={`/${id}`}
           className={classes.link}
           onClick={handleMovieCardLinkClick}
         >
