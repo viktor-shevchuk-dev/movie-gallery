@@ -9,6 +9,7 @@ import {
 import classes from "./Main.module.css";
 
 import { fetchMovies } from "services/movieshelf-api";
+
 import Status from "utils/state-machine";
 const { IDLE, PENDING, REJECTED, RESOLVED } = Status;
 

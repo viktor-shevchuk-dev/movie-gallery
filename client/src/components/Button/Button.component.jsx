@@ -9,9 +9,9 @@ export const Button = ({
   type = "button",
   extraClassName,
   primary,
-  secondary,
   inverted,
-  ...allyProps
+  secondary,
+  ...props
 }) => (
   <button
     type={type}
@@ -22,7 +22,7 @@ export const Button = ({
       secondary,
     })}
     onClick={onClick}
-    {...allyProps}
+    {...props}
   >
     {children}
   </button>
