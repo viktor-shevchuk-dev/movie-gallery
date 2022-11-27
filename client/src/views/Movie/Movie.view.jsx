@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 
 import {
@@ -11,48 +10,12 @@ import {
 
 import { ReactComponent as Search } from "icons/search.svg";
 
-import { convertMinsToHrsMins } from "converters";
-
-import { fetchMovieDetails } from "services/movieshelf-api";
-import Status from "utils/state-machine";
-const { IDLE, PENDING, REJECTED, RESOLVED } = Status;
+import { useGetMovieQuery } from "services/movie-shelf/movie-shelf.api";
 
 export const Movie = () => {
   const { movieId } = useParams();
-  const [movie, setMovie] = useState(null);
-  const [status, setStatus] = useState(IDLE);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    setStatus(PENDING);
-    fetchMovieDetails(movieId)
-      .then(
-        ({
-          title,
-          vote_average: voteAverage,
-          genres,
-          release_date: releaseDate,
-          runtime,
-          poster_path: posterPath,
-          overview,
-        }) => {
-          setMovie({
-            title,
-            voteAverage,
-            genres,
-            releaseYear: new Date(releaseDate).getFullYear(),
-            runtime: convertMinsToHrsMins(runtime),
-            posterPath,
-            overview,
-          });
-          setStatus(RESOLVED);
-        }
-      )
-      .catch((error) => {
-        setError(error);
-        setStatus(REJECTED);
-      });
-  }, [movieId]);
+  const { data: movie, isLoading, isError, error } = useGetMovieQuery(movieId);
 
   return (
     <>
@@ -63,9 +26,9 @@ export const Movie = () => {
           </Link>
         </MainHeader>
         <ErrorBoundary>
-          {status === PENDING && <p>Loading...</p>}
-          {status === REJECTED && <p>{error.message}</p>}
-          {status === RESOLVED && (
+          {isLoading && <p>Loading...</p>}
+          {isError && <p>{error.message}</p>}
+          {movie && (
             <MovieDetail
               title={movie.title}
               voteAverage={movie.voteAverage}

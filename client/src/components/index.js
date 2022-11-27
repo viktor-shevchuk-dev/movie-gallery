@@ -3,7 +3,7 @@ export * from "./Button";
 export * from "./ErrorBoundary";
 export * from "./FindMovie";
 export * from "./Footer";
-export * from "./FoundMoviesListFilterBar";
+export * from "./MovieShelfFilterBar";
 export * from "./GeneralFilter";
 export * from "./GenreFilter";
 export * from "./Header";
