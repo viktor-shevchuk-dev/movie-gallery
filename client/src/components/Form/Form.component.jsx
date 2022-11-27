@@ -1,11 +1,10 @@
 import { useEffect } from "react";
 import classNames from "classnames/bind";
+import { Formik } from "formik";
 
 import { Button, BaseSelect } from "components";
 
-import { useInput, useLocalStorage } from "hooks";
-
-import { isBlank, validateUrl, isNumber, validateSelect } from "validators";
+import { validateUrl, isNumber, validateSelect } from "validators";
 
 import classes from "./Form.module.css";
 
@@ -23,243 +22,217 @@ export const Form = ({ movieId }) => {
     if (movieId) fetchMovieData(movieId);
   }, [movieId]);
 
-  const {
-    value: titleValue,
-    isValid: isTitleValid,
-    hasError: hasTitleError,
-    valueChangeHandler: titleChangeHandler,
-    inputBlurHandler: titleBlurHandler,
-    reset: resetTitle,
-  } = useInput(isBlank);
-
-  const {
-    value: urlValue,
-    isValid: isURLValid,
-    hasError: hasURLError,
-    valueChangeHandler: urlChangeHandler,
-    inputBlurHandler: urlBlurHandler,
-    reset: resetURL,
-  } = useInput(validateUrl);
-
-  const {
-    value: ratingValue,
-    isValid: isRatingValid,
-    hasError: hasRatingError,
-    valueChangeHandler: ratingChangeHandler,
-    inputBlurHandler: ratingBlurHandler,
-    reset: resetRating,
-  } = useInput(isNumber);
-
-  const {
-    value: genreValue,
-    isValid: isGenreValid,
-    hasError: hasGenreError,
-    valueChangeHandler: genreChangeHandler,
-    inputBlurHandler: genreBlurHandler,
-    reset: resetGenre,
-  } = useInput(validateSelect);
-
-  const {
-    value: runtimeValue,
-    isValid: isRuntimeValid,
-    hasError: hasRuntimeError,
-    valueChangeHandler: runtimeChangeHandler,
-    inputBlurHandler: runtimeBlurHandler,
-    reset: resetRuntime,
-  } = useInput(isBlank);
-
-  const {
-    value: descriptionValue,
-    isValid: isDescriptionValid,
-    hasError: hasDescriptionError,
-    valueChangeHandler: descriptionChangeHandler,
-    inputBlurHandler: descriptionBlurHandler,
-    reset: resetDescription,
-  } = useInput(isBlank);
-
-  const {
-    value: releaseDateValue,
-    isValid: isReleaseDateValid,
-    hasError: hasReleaseDateError,
-    inputBlurHandler: releaseDateBlurHandler,
-    valueChangeHandler: releaseDateChangeHandler,
-    reset: resetReleaseDate,
-  } = useInput(isBlank);
-
-  const isFormValid =
-    isReleaseDateValid &&
-    isDescriptionValid &&
-    isRuntimeValid &&
-    isGenreValid &&
-    isRatingValid &&
-    isTitleValid &&
-    isURLValid;
-
-  const resetFields = () => {
-    resetTitle();
-    resetURL();
-    resetRating();
-    resetGenre();
-    resetRuntime();
-    resetDescription();
-    resetReleaseDate();
-  };
-
-  const submitHandler = (event) => {
-    event.preventDefault();
-
-    if (!isFormValid) return;
-
-    console.log({
-      titleValue,
-      urlValue,
-      ratingValue,
-      genreValue,
-      runtimeValue,
-      descriptionValue,
-      releaseDateValue,
-    });
-
-    resetFields();
+  const submitHandler = (values, { setSubmitting }) => {
+    setTimeout(() => {
+      alert(JSON.stringify(values, null, 2));
+      setSubmitting(false);
+    }, 200);
   };
 
   const formControlClasses = (invalid) =>
     classNames.bind(classes)("form-control", { invalid });
 
-  const firstNameClasses = formControlClasses(hasTitleError);
-  const urlClasses = formControlClasses(hasURLError);
-  const ratingClasses = formControlClasses(hasRatingError);
-  const genreClasses = formControlClasses(hasGenreError);
-  const runtimeClasses = formControlClasses(hasRuntimeError);
-  const descriptionClasses = formControlClasses(hasDescriptionError);
-  const releaseDateClasses = formControlClasses(hasReleaseDateError);
+  const initialValues = {
+    title: "",
+    releaseDate: "",
+    url: "",
+    rating: "",
+    genre: [],
+    runtime: "",
+    description: "",
+  };
+
+  const validate = (values) => {
+    const errors = {};
+
+    if (!values.title) errors.title = "Title is mandatory.";
+
+    if (!values.releaseDate) errors.releaseDate = "Release date is mandatory.";
+
+    if (!values.url) errors.url = "URL is mandatory.";
+    else if (!validateUrl(values.url)) errors.url = "URL should be valid.";
+
+    if (!values.rating) errors.rating = "Rating is mandatory.";
+    else if (!isNumber(values.rating))
+      errors.rating = "Rating should be a number.";
+
+    if (!validateSelect(values.genre)) errors.genre = "Genre is mandatory.";
+
+    if (!values.runtime) errors.runtime = "Runtime is mandatory.";
+
+    if (!values.description) errors.description = "Description is mandatory.";
+
+    return errors;
+  };
 
   return (
-    <form onSubmit={submitHandler}>
-      <div className={classes["control-group"]}>
-        <div className={firstNameClasses}>
-          <label htmlFor="title">Title</label>
-          <input
-            type="text"
-            id="title"
-            value={titleValue}
-            onChange={titleChangeHandler}
-            onBlur={titleBlurHandler}
-            placeholder="Name of the movie"
-          />
-          {hasTitleError && (
-            <p className={classes["error-text"]}>Title is mandatory.</p>
-          )}
-        </div>
-        <div className={releaseDateClasses}>
-          <label htmlFor="releaseDate">Release Date</label>
-          <input
-            type="date"
-            id="releaseDate"
-            onChange={releaseDateChangeHandler}
-            onBlur={releaseDateBlurHandler}
-            value={releaseDateValue}
-          ></input>
-          {hasReleaseDateError && (
-            <p className={classes["error-text"]}>Release date is mandatory.</p>
-          )}
-        </div>
-      </div>
-      <div className={classes["control-group"]}>
-        <div className={urlClasses}>
-          <label htmlFor="url">Movie URL</label>
-          <input
-            type="url"
-            id="url"
-            value={urlValue}
-            onChange={urlChangeHandler}
-            onBlur={urlBlurHandler}
-            placeholder="https://"
-          />
-          {hasURLError && (
-            <p className={classes["error-text"]}>URL should be valid.</p>
-          )}
-        </div>
-        <div className={ratingClasses}>
-          <label htmlFor="rating">Movie URL</label>
-          <input
-            type="number"
-            id="rating"
-            value={ratingValue}
-            onChange={ratingChangeHandler}
-            onBlur={ratingBlurHandler}
-            placeholder="7.8"
-          />
-          {hasRatingError && (
-            <p className={classes["error-text"]}>Rating should be a number. </p>
-          )}
-        </div>
-      </div>
-      <div className={classes["control-group"]}>
-        <div className={genreClasses}>
-          <label htmlFor="genre">Genre</label>
-          <BaseSelect
-            options={genresOptionsList}
-            isMulti
-            id="genre"
-            value={genreValue}
-            onChange={genreChangeHandler}
-            onBlur={genreBlurHandler}
-            placeholder="Select Genre"
-            extraClassName={classes.select}
-          />
-          {hasGenreError && (
-            <p className={classes["error-text"]}>Genre is mandatory.</p>
-          )}
-        </div>
-        <div className={runtimeClasses}>
-          <label htmlFor="runtime">Runtime</label>
-          <input
-            type="text"
-            id="runtime"
-            value={runtimeValue}
-            onChange={runtimeChangeHandler}
-            onBlur={runtimeBlurHandler}
-            placeholder="Minutes"
-          />
-          {hasRuntimeError && (
-            <p className={classes["error-text"]}>Runtime is mandatory.</p>
-          )}
-        </div>
-      </div>
+    <Formik
+      initialValues={initialValues}
+      validate={validate}
+      onSubmit={submitHandler}
+    >
+      {({
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        isSubmitting,
+        resetForm,
+        /* and other goodies */
+      }) => (
+        <form onSubmit={handleSubmit}>
+          <div className={classes["control-group"]}>
+            <div className={formControlClasses(errors.title && touched.title)}>
+              <label htmlFor="title">Title</label>
+              <input
+                type="text"
+                name="title"
+                id="title"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.title}
+                placeholder="Name of the movie"
+              />
+              {errors.title && touched.title && (
+                <p className={classes["error-text"]}>{errors.title}</p>
+              )}
+            </div>
 
-      <div className={descriptionClasses}>
-        <label htmlFor="description">Overview</label>
-        <textarea
-          id="description"
-          value={descriptionValue}
-          onChange={descriptionChangeHandler}
-          onBlur={descriptionBlurHandler}
-          placeholder="Movie Description"
-        />
-        {hasDescriptionError && (
-          <p className={classes["error-text"]}>Description is mandatory.</p>
-        )}
-      </div>
+            <div
+              className={formControlClasses(
+                errors.releaseDate && touched.releaseDate
+              )}
+            >
+              <label htmlFor="releaseDate">Release Date</label>
+              <input
+                type="date"
+                name="releaseDate"
+                id="releaseDate"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.releaseDate}
+              />
+              {errors.releaseDate && touched.releaseDate && (
+                <p className={classes["error-text"]}>{errors.releaseDate}</p>
+              )}
+            </div>
+          </div>
 
-      <div className={classes["form-actions"]}>
-        <Button
-          primary
-          inverted
-          extraClassName={classes["confirm-button"]}
-          onClick={resetFields}
-        >
-          Reset
-        </Button>
-        <Button
-          type="submit"
-          extraClassName={classes["submit-button"]}
-          disabled={!isFormValid}
-          primary
-        >
-          Submit
-        </Button>
-      </div>
-    </form>
+          <div className={classes["control-group"]}>
+            <div className={formControlClasses(errors.url && touched.url)}>
+              <label htmlFor="url">Movie URL</label>
+              <input
+                type="url"
+                name="url"
+                id="url"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.url}
+                placeholder="https://"
+              />
+              {errors.url && touched.url && (
+                <p className={classes["error-text"]}>{errors.url}</p>
+              )}
+            </div>
+
+            <div
+              className={formControlClasses(errors.rating && touched.rating)}
+            >
+              <label htmlFor="rating">Rating</label>
+              <input
+                type="number"
+                name="rating"
+                id="rating"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.rating}
+                placeholder="7.8"
+              />
+              {errors.rating && touched.rating && (
+                <p className={classes["error-text"]}>{errors.rating}</p>
+              )}
+            </div>
+          </div>
+
+          <div className={classes["control-group"]}>
+            <div className={formControlClasses(errors.genre && touched.genre)}>
+              <label htmlFor="genre">Genre</label>
+              <BaseSelect
+                options={genresOptionsList}
+                isMulti
+                name="genre"
+                id="genre"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.genre}
+                placeholder="Select Genre"
+                extraClassName={classes.select}
+              />
+              {errors.genre && touched.genre && (
+                <p className={classes["error-text"]}>{errors.genre}</p>
+              )}
+            </div>
+
+            <div
+              className={formControlClasses(errors.runtime && touched.runtime)}
+            >
+              <label htmlFor="runtime">Runtime</label>
+              <input
+                type="text"
+                name="runtime"
+                id="runtime"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.runtime}
+                placeholder="Minutes"
+              />
+              {errors.runtime && touched.runtime && (
+                <p className={classes["error-text"]}>{errors.runtime}</p>
+              )}
+            </div>
+          </div>
+
+          <div
+            className={formControlClasses(
+              errors.description && touched.description
+            )}
+          >
+            <label htmlFor="description">Overview</label>
+            <textarea
+              name="description"
+              id="description"
+              value={values.description}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder="Movie Description"
+            />
+            {errors.description && touched.description && (
+              <p className={classes["error-text"]}>{errors.description}</p>
+            )}
+          </div>
+
+          <div className={classes["form-actions"]}>
+            <Button
+              primary
+              inverted
+              extraClassName={classes["confirm-button"]}
+              onClick={resetForm}
+            >
+              Reset
+            </Button>
+            <Button
+              type="submit"
+              extraClassName={classes["submit-button"]}
+              disabled={isSubmitting}
+              primary
+            >
+              Submit
+            </Button>
+          </div>
+        </form>
+      )}
+    </Formik>
   );
 };
