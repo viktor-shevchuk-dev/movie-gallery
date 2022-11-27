@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import { BaseSelect, Title, Modal, Form, Button } from "components";
+import { MultiSelect, Title, Modal, Form, Button } from "components";
 
 import classes from "./MovieCard.module.css";
 
@@ -81,7 +81,7 @@ export const MovieCard = ({ src, title, genresList, id, year }) => {
               <ShowOptions />
             </Button>
           )}
-          <BaseSelect
+          <MultiSelect
             isClosingMenu
             selectRef={ref}
             menuIsOpen={menuIsOpen}

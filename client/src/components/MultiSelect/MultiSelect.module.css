@@ -1,0 +1,7 @@
+.multi-select [class$="menu"] {
+  background-color: #232323ea;
+}
+
+.multi-select [class$="option"] {
+  color: #fff;
+}

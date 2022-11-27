@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import classNames from "classnames/bind";
-import { Formik } from "formik";
+import { Formik, Field } from "formik";
 
-import { Button, BaseSelect } from "components";
+import { Button, MultiSelect, FormikSelect } from "components";
 
 import { validateUrl, isNumber, validateSelect } from "validators";
 
@@ -56,7 +56,9 @@ export const Form = ({ movieId }) => {
     else if (!isNumber(values.rating))
       errors.rating = "Rating should be a number.";
 
-    if (!validateSelect(values.genre)) errors.genre = "Genre is mandatory.";
+    if (!validateSelect(values.genre)) {
+      errors.genre = "Genre is mandatory.";
+    }
 
     if (!values.runtime) errors.runtime = "Runtime is mandatory.";
 
@@ -159,14 +161,12 @@ export const Form = ({ movieId }) => {
           <div className={classes["control-group"]}>
             <div className={formControlClasses(errors.genre && touched.genre)}>
               <label htmlFor="genre">Genre</label>
-              <BaseSelect
+              <Field
                 options={genresOptionsList}
                 isMulti
                 name="genre"
                 id="genre"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.genre}
+                component={FormikSelect}
                 placeholder="Select Genre"
                 extraClassName={classes.select}
               />
