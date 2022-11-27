@@ -10,7 +10,7 @@ import {
 
 import { ReactComponent as Search } from "icons/search.svg";
 
-import { useGetMovieQuery } from "services/movie-shelf/movie-shelf.api";
+import { useGetMovieQuery } from "services";
 
 export const Movie = () => {
   const { movieId } = useParams();

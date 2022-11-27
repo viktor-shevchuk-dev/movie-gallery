@@ -1,6 +1,6 @@
 import { convertMinsToHrsMins } from "converters";
 
-const movieEndpoint = {
+export const movieEndpoint = {
   query: (id) => `/${id}`,
   transformResponse: ({
     title,
@@ -20,5 +20,3 @@ const movieEndpoint = {
     runtime: runtime && convertMinsToHrsMins(runtime),
   }),
 };
-
-export default movieEndpoint;

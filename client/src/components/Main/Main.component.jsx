@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useGetMovieShelfQuery } from "services/movie-shelf/movie-shelf.api";
+import { useGetMovieShelfQuery } from "services";
 
 import { MoviesList, MovieShelfFilterBar, ErrorBoundary } from "components";
 

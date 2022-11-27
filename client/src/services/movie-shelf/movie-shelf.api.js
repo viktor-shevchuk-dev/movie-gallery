@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import movieShelfEndpoint from "./endpoints/movie-shelf.endpoint";
-import movieEndpoint from "./endpoints/movie.endpoint";
+import { movieShelfEndpoint, movieEndpoint } from "./endpoints";
 
 export const movieShelfApi = createApi({
   reducerPath: "movieShelfApi",
