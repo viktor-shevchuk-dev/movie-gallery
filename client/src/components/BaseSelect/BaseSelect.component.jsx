@@ -1,10 +1,9 @@
 import Select, { components } from "react-select";
-
 import classNames from "classnames/bind";
 
 import { Button } from "components";
 
-import classes from "./MultiSelect.module.css";
+import classes from "./BaseSelect.module.css";
 
 import { ReactComponent as CloseIcon } from "icons/close.svg";
 
@@ -20,7 +19,7 @@ const closeIconStyle = {
   display: "block",
 };
 
-export const MultiSelect = ({
+export const BaseSelect = ({
   options,
   isMulti,
   id,
@@ -58,7 +57,7 @@ export const MultiSelect = ({
     onChange={onChange}
     onBlur={onBlur}
     placeholder={placeholder}
-    className={classNames.bind(classes)("multi-select", {
+    className={classNames.bind(classes)("base-select", {
       [extraClassName]: extraClassName,
     })}
     isClearable={false}

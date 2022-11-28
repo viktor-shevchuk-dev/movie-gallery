@@ -15,7 +15,20 @@ import { useGetMovieQuery } from "services";
 export const Movie = () => {
   const { movieId } = useParams();
 
-  const { data: movie, isLoading, isError, error } = useGetMovieQuery(movieId);
+  const {
+    data: {
+      title,
+      genres,
+      posterPath,
+      overview,
+      voteAverage,
+      releaseYear,
+      runtime,
+    } = {},
+    isLoading,
+    isError,
+    error,
+  } = useGetMovieQuery(movieId);
 
   return (
     <>
@@ -28,15 +41,15 @@ export const Movie = () => {
         <ErrorBoundary>
           {isLoading && <p>Loading...</p>}
           {isError && <p>{error.message}</p>}
-          {movie && (
+          {title && genres && posterPath && overview && releaseYear && (
             <MovieDetail
-              title={movie.title}
-              voteAverage={movie.voteAverage}
-              genres={movie.genres}
-              releaseYear={movie.releaseYear}
-              runtime={movie.runtime}
-              posterPath={movie.posterPath}
-              overview={movie.overview}
+              title={title}
+              voteAverage={voteAverage}
+              genres={genres}
+              releaseYear={releaseYear}
+              runtime={runtime}
+              posterPath={posterPath}
+              overview={overview}
             />
           )}
         </ErrorBoundary>

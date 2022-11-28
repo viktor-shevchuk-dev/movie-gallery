@@ -1,7 +1,6 @@
 export const movieShelfEndpoint = {
   query: ({ sortOption, genreOption }) => {
-    const endpoint = [];
-    (sortOption || genreOption) && endpoint.push("?");
+    const endpoint = ["?"];
     sortOption && endpoint.push(`sortBy=${sortOption}&sortOrder=desc`);
     genreOption &&
       genreOption !== "all" &&

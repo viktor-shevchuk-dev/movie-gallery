@@ -15,7 +15,10 @@ export const Main = () => {
     isLoading,
     isError,
     error,
-  } = useGetMovieShelfQuery({ genreOption, sortOption });
+  } = useGetMovieShelfQuery(
+    { genreOption, sortOption },
+    { skip: !genreOption || !sortOption }
+  );
 
   return (
     <main className={classes.main}>

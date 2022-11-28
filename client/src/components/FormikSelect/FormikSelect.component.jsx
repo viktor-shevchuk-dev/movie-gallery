@@ -1,4 +1,4 @@
-import { MultiSelect } from "components/MultiSelect";
+import { BaseSelect } from "components";
 
 export const FormikSelect = ({
   extraClassName,
@@ -24,7 +24,7 @@ export const FormikSelect = ({
   };
 
   return (
-    <MultiSelect
+    <BaseSelect
       value={getValue()}
       onChange={onChange}
       name={field.name}

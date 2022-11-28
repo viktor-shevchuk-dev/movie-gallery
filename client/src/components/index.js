@@ -1,4 +1,5 @@
 export * from "./App";
+export * from "./BaseSelect";
 export * from "./Button";
 export * from "./ErrorBoundary";
 export * from "./FindMovie";
@@ -17,7 +18,6 @@ export * from "./Modal";
 export * from "./Title";
 export * from "./Form";
 export * from "./ShowOptionsButton";
-export * from "./MultiSelect";
 export * from "./FormControl";
 export * from "./MovieDetail";
 export * from "./MainHeader";

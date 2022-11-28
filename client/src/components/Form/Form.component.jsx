@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import classNames from "classnames/bind";
 import { Formik, Field } from "formik";
 
-import { Button, MultiSelect, FormikSelect } from "components";
+import { Button, FormikSelect } from "components";
 
 import { validateUrl, isNumber, validateSelect } from "validators";
 
@@ -22,10 +22,11 @@ export const Form = ({ movieId }) => {
     if (movieId) fetchMovieData(movieId);
   }, [movieId]);
 
-  const submitHandler = (values, { setSubmitting }) => {
+  const submitHandler = (values, { setSubmitting, resetForm }) => {
     setTimeout(() => {
       alert(JSON.stringify(values, null, 2));
       setSubmitting(false);
+      resetForm();
     }, 200);
   };
 
@@ -42,27 +43,32 @@ export const Form = ({ movieId }) => {
     description: "",
   };
 
-  const validate = (values) => {
+  const validate = ({
+    title,
+    releaseDate,
+    url,
+    rating,
+    genre,
+    runtime,
+    description,
+  }) => {
     const errors = {};
 
-    if (!values.title) errors.title = "Title is mandatory.";
+    if (!title) errors.title = "Title is mandatory.";
 
-    if (!values.releaseDate) errors.releaseDate = "Release date is mandatory.";
+    if (!releaseDate) errors.releaseDate = "Release date is mandatory.";
 
-    if (!values.url) errors.url = "URL is mandatory.";
-    else if (!validateUrl(values.url)) errors.url = "URL should be valid.";
+    if (!url) errors.url = "URL is mandatory.";
+    else if (!validateUrl(url)) errors.url = "URL should be valid.";
 
-    if (!values.rating) errors.rating = "Rating is mandatory.";
-    else if (!isNumber(values.rating))
-      errors.rating = "Rating should be a number.";
+    if (!rating) errors.rating = "Rating is mandatory.";
+    else if (!isNumber(rating)) errors.rating = "Rating should be a number.";
 
-    if (!validateSelect(values.genre)) {
-      errors.genre = "Genre is mandatory.";
-    }
+    if (!validateSelect(genre)) errors.genre = "Genre is mandatory.";
 
-    if (!values.runtime) errors.runtime = "Runtime is mandatory.";
+    if (!runtime) errors.runtime = "Runtime is mandatory.";
 
-    if (!values.description) errors.description = "Description is mandatory.";
+    if (!description) errors.description = "Description is mandatory.";
 
     return errors;
   };
@@ -82,7 +88,6 @@ export const Form = ({ movieId }) => {
         handleSubmit,
         isSubmitting,
         resetForm,
-        /* and other goodies */
       }) => (
         <form onSubmit={handleSubmit}>
           <div className={classes["control-group"]}>
