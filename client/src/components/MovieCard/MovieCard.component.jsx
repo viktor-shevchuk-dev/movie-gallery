@@ -2,22 +2,35 @@ import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import { BaseSelect, Title, Modal, Form, Button } from "components";
+import { BaseSelect, Title, Modal, BaseForm, Button } from "components";
 
 import classes from "./MovieCard.module.css";
 
 import { ReactComponent as ShowOptions } from "icons/three-dots.svg";
+import { useDeleteMovieMutation } from "services";
 
 const optionsList = [
   { value: "edit", label: "Edit" },
   { value: "delete", label: "Delete" },
 ];
 
-export const MovieCard = ({ src, title, genresList, id, year }) => {
+export const MovieCard = ({
+  title,
+  genres,
+  id,
+  posterPath,
+  releaseDate,
+  runtime,
+  voteAverage,
+  overview,
+}) => {
   const [showModal, setShowModal] = useState(false);
   const [optionValue, setOptionValue] = useState("");
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const ref = useRef(null);
+  const [deleteMovieMutation] = useDeleteMovieMutation();
+
+  const year = new Date(releaseDate).getFullYear();
 
   const toggleModal = () => setShowModal((showModal) => !showModal);
 
@@ -25,10 +38,6 @@ export const MovieCard = ({ src, title, genresList, id, year }) => {
     setOptionValue(option);
     setMenuIsOpen((showOptions) => !showOptions);
     toggleModal();
-  };
-
-  const deleteMovie = () => {
-    console.log("delete");
   };
 
   const toggleMenuIsOpen = (event) => {
@@ -43,13 +52,32 @@ export const MovieCard = ({ src, title, genresList, id, year }) => {
     ["svg", "DIV", "BUTTON"].includes(event.target.nodeName) &&
     event.preventDefault();
 
+  const deleteMovie = () => {
+    deleteMovieMutation(id);
+  };
+
   return (
     <>
       {showModal && (
         <Modal onClose={toggleModal}>
           {optionValue.value === "edit" ? (
             <>
-              <Title>Edit movie</Title> <Form movieId={id} />
+              <Title>Edit movie</Title>
+              <BaseForm
+                movieToEdit={{
+                  title,
+                  genres: genres.map((genre) => ({
+                    value: genre.toLowerCase(),
+                    label: genre,
+                  })),
+                  id,
+                  posterPath,
+                  releaseDate,
+                  overview,
+                  runtime,
+                  voteAverage,
+                }}
+              />
             </>
           ) : (
             <>
@@ -72,7 +100,7 @@ export const MovieCard = ({ src, title, genresList, id, year }) => {
           className={classes.link}
           onClick={handleMovieCardLinkClick}
         >
-          <img src={src} alt={title} className={classes.poster} />
+          <img src={posterPath} alt={title} className={classes.poster} />
           {!menuIsOpen && (
             <Button
               onClick={toggleMenuIsOpen}
@@ -97,9 +125,9 @@ export const MovieCard = ({ src, title, genresList, id, year }) => {
 
           <div className={classes["title-and-year"]}>
             <p className={classes.title}>{title}</p>
-            <p className={classes.year}>{year}</p>
+            {year && <p className={classes.year}>{year}</p>}
           </div>
-          <p className={classes["genres-list"]}> {genresList?.join(", ")}</p>
+          <p className={classes.genres}> {genres?.join(", ")}</p>
         </Link>
       </li>
     </>
@@ -107,9 +135,9 @@ export const MovieCard = ({ src, title, genresList, id, year }) => {
 };
 
 MovieCard.propTypes = {
-  src: PropTypes.string.isRequired,
+  posterPath: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  genresList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  genres: PropTypes.arrayOf(PropTypes.string),
   id: PropTypes.number.isRequired,
-  year: PropTypes.number.isRequired,
+  year: PropTypes.number,
 };
