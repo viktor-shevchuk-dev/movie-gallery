@@ -1,4 +1,4 @@
-import { convertMinsToHrsMins } from "converters";
+import { convertMinsToHrsMins, convertDateToYear } from "converters";
 
 export const movie = {
   query: (id) => `/${id}`,
@@ -16,8 +16,8 @@ export const movie = {
     genres,
     posterPath,
     overview,
-    voteAverage: voteAverage ? voteAverage : null,
-    year: new Date(releaseDate).getFullYear(),
+    voteAverage: voteAverage || null,
+    year: convertDateToYear(releaseDate),
     runtime: runtime && convertMinsToHrsMins(runtime),
   }),
 };

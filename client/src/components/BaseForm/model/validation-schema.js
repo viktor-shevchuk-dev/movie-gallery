@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-const validationSchema = yup.object({
+export const validationSchema = yup.object({
   title: yup.string().required("Title is required"),
   releaseDate: yup.string().required("Release date is required"),
   posterPath: yup.string().url("Invalid url").required("Url is required"),
@@ -15,5 +15,3 @@ const validationSchema = yup.object({
     .required("Runtime is required"),
   overview: yup.string().required("Description is required"),
 });
-
-export default validationSchema;

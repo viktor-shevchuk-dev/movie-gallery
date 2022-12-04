@@ -19,7 +19,7 @@ export const editMovie = {
       release_date,
       poster_path,
       vote_average,
-      genres: genres.map(({ value }) => value),
+      genres: genres.map(({ label }) => label),
     },
   }),
   invalidatesTags: (_, __, { id }) => [{ type: "movieShelf", id }],

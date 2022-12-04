@@ -12,12 +12,12 @@ export const addMovie = {
     method: "POST",
     body: {
       title,
-      genres,
       runtime,
       overview,
       release_date,
       poster_path,
       vote_average,
+      genres: genres.map(({ label }) => label),
     },
   }),
   invalidatesTags: [{ type: "movieShelf", id: "movieShelf" }],

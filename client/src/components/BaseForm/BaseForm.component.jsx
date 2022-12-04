@@ -2,15 +2,12 @@ import React, { useState, useEffect } from "react";
 import classNames from "classnames/bind";
 import { Field, Formik, Form, useField } from "formik";
 
+import { validationSchema, initialValues, genresOptionsList } from "./model";
 import { useAddMovieMutation, useEditMovieMutation } from "services";
 
 import { Button, MultiSelect } from "components";
 
 import classes from "./BaseForm.module.css";
-
-import validationSchema from "./validation-schema";
-import emptyInitialValues from "./initial-values";
-import genresOptionsList from "./genres-options-list";
 
 const Input = ({ as = "input", label, ...props }) => {
   const [field, { touched, error }] = useField(props);
@@ -35,25 +32,52 @@ const Input = ({ as = "input", label, ...props }) => {
 
 export const BaseForm = ({
   movieToEdit,
-  onAddedMovieError,
-  onAddedMovieSuccess,
+  onAddingError,
+  onAddingSuccess,
+  onEditingError,
+  onEditingSuccess,
 }) => {
   const [addedMovie, setAddedMovie] = useState();
   const [editedMovie, setEditedMovie] = useState();
-  const [addMovie, { error, isLoading, isSuccess, isError, data: response }] =
-    useAddMovieMutation();
+  const [
+    addMovie,
+    {
+      error: addingError,
+      isLoading: isAddingLoading,
+      isSuccess: isAddingSuccess,
+      isError: isAddingError,
+      data: addingResponse,
+    },
+  ] = useAddMovieMutation();
+  const [
+    editMovie,
+    {
+      error: editingError,
+      isLoading: isEditingLoading,
+      isSuccess: isEditingSuccess,
+      isError: isEditingError,
+      data: editingResponse,
+    },
+  ] = useEditMovieMutation();
 
-  const [editMovie] = useEditMovieMutation();
+  useEffect(() => {
+    isAddingError && onAddingError(addingError);
+  }, [isAddingError, onAddingError, addingError]);
 
-  // useEffect(() => {
-  //   isError && onAddedMovieError(error);
-  // }, [isError, onAddedMovieError, error]);
+  useEffect(() => {
+    isEditingError && onEditingError(editingError);
+  }, [isEditingError, onEditingError, editingError]);
 
-  // const title = response?.title;
+  const addingMovieTitle = addingResponse?.title;
+  const editingMovieTitle = editingResponse?.title;
 
-  // useEffect(() => {
-  //   isSuccess && onAddedMovieSuccess(title);
-  // }, [isSuccess, onAddedMovieSuccess, title]);
+  useEffect(() => {
+    isAddingSuccess && onAddingSuccess(addingMovieTitle);
+  }, [isAddingSuccess, onAddingSuccess, addingMovieTitle]);
+
+  useEffect(() => {
+    isEditingSuccess && onEditingSuccess(editingMovieTitle);
+  }, [isEditingSuccess, onEditingSuccess, editingMovieTitle]);
 
   useEffect(() => {
     editedMovie && editMovie(editedMovie);
@@ -71,7 +95,7 @@ export const BaseForm = ({
 
   return (
     <Formik
-      initialValues={movieToEdit || emptyInitialValues}
+      initialValues={movieToEdit || initialValues}
       validationSchema={validationSchema}
       onSubmit={submitHandler}
     >
@@ -152,7 +176,7 @@ export const BaseForm = ({
               extraClassName={classes["submit-button"]}
               disabled={isSubmitting}
             >
-              {isLoading ? "...Adding Movie" : "Submit"}
+              {isAddingLoading || isEditingLoading ? "...Submitting" : "Submit"}
             </Button>
           </div>
         </Form>

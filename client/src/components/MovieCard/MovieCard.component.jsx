@@ -8,6 +8,7 @@ import classes from "./MovieCard.module.css";
 
 import { ReactComponent as ShowOptions } from "icons/three-dots.svg";
 import { useDeleteMovieMutation } from "services";
+import { convertDateToYear } from "converters";
 
 const optionsList = [
   { value: "edit", label: "Edit" },
@@ -29,10 +30,17 @@ export const MovieCard = ({
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const ref = useRef(null);
   const [deleteMovieMutation] = useDeleteMovieMutation();
+  const [isEditingSuccess, setIsEditingSuccess] = useState(false);
+  const [isEditingError, setIsEditingError] = useState(false);
 
-  const year = new Date(releaseDate).getFullYear();
+  const year = convertDateToYear(releaseDate);
 
-  const toggleModal = () => setShowModal((showModal) => !showModal);
+  const toggleModal = () => {
+    setShowModal((showModal) => !showModal);
+
+    setIsEditingSuccess(false);
+    setIsEditingError(false);
+  };
 
   const optionChangeHandler = (option) => {
     setOptionValue(option);
@@ -52,46 +60,72 @@ export const MovieCard = ({
     ["svg", "DIV", "BUTTON"].includes(event.target.nodeName) &&
     event.preventDefault();
 
-  const deleteMovie = () => {
-    deleteMovieMutation(id);
+  const deleteMovie = () => deleteMovieMutation(id);
+
+  const editingErrorHandler = (error) => {
+    console.log(error);
+    setIsEditingError("Sth went wrong.");
   };
+
+  const editingSuccessHandler = (title) =>
+    setIsEditingSuccess(`${title} was successfully edited.`);
+
+  let modalBodyContent, modalHeadingContent;
+
+  if (!isEditingSuccess && !isEditingError) {
+    if (optionValue.value === "edit") {
+      modalHeadingContent = "Edit";
+      modalBodyContent = (
+        <BaseForm
+          onEditingError={editingErrorHandler}
+          onEditingSuccess={editingSuccessHandler}
+          movieToEdit={{
+            title,
+            id,
+            posterPath,
+            releaseDate,
+            overview,
+            runtime,
+            voteAverage,
+            genres: genres.map((genre) => ({
+              value: genre.toLowerCase(),
+              label: genre,
+            })),
+          }}
+        />
+      );
+    } else {
+      modalHeadingContent = "Delete movie";
+      modalBodyContent = (
+        <>
+          <p>Are you sure you want to delete this movie?</p>
+          <Button
+            primary
+            extraClassName={classes["confirm-button"]}
+            onClick={deleteMovie}
+          >
+            Confirm
+          </Button>
+        </>
+      );
+    }
+  } else {
+    if (isEditingSuccess) modalHeadingContent = isEditingSuccess;
+    else if (isEditingError) modalHeadingContent = isEditingError;
+
+    modalBodyContent = (
+      <Button primary onClick={toggleModal}>
+        OK
+      </Button>
+    );
+  }
 
   return (
     <>
       {showModal && (
         <Modal onClose={toggleModal}>
-          {optionValue.value === "edit" ? (
-            <>
-              <Title>Edit movie</Title>
-              <BaseForm
-                movieToEdit={{
-                  title,
-                  genres: genres.map((genre) => ({
-                    value: genre.toLowerCase(),
-                    label: genre,
-                  })),
-                  id,
-                  posterPath,
-                  releaseDate,
-                  overview,
-                  runtime,
-                  voteAverage,
-                }}
-              />
-            </>
-          ) : (
-            <>
-              <Title>Delete movie</Title>
-              <p>Are you sure you want to delete this movie?</p>
-              <Button
-                primary
-                extraClassName={classes["confirm-button"]}
-                onClick={deleteMovie}
-              >
-                Confirm
-              </Button>
-            </>
-          )}
+          <Title>{modalHeadingContent}</Title>
+          {modalBodyContent}
         </Modal>
       )}
       <li className={classes["movie-card"]}>

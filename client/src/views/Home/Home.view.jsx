@@ -16,37 +16,38 @@ import {
 
 export const Home = () => {
   const [showModal, setShowModal] = useState(false);
-  const [isFormSuccess, setIsFormSuccess] = useState(false);
-  const [isFormError, setIsFormError] = useState(false);
+
+  const [isAddingSuccess, setIsAddingSuccess] = useState(false);
+  const [isAddingError, setIsAddingError] = useState(false);
 
   const toggleModal = () => {
     setShowModal((showModal) => !showModal);
-    setIsFormSuccess(false);
-    setIsFormError(false);
+
+    setIsAddingSuccess(false);
+    setIsAddingError(false);
   };
 
-  const addedMovieErrorHandler = (error) => {
+  const addingErrorHandler = (error) => {
     console.log(error);
-    setIsFormError("Sth went wrong.");
+    setIsAddingError("Sth went wrong.");
   };
 
-  const addedMovieSuccessHandler = (title) => {
-    setIsFormSuccess(`${title} was successfully added to the movie library.`);
-  };
+  const addingSuccessHandler = (title) =>
+    setIsAddingSuccess(`${title} was successfully added to the movie library.`);
 
   let modalBodyContent, modalHeadingContent;
 
-  if (!isFormSuccess && !isFormError) {
+  if (!isAddingSuccess && !isAddingError) {
     modalHeadingContent = "Add movie";
     modalBodyContent = (
       <BaseForm
-        onAddedMovieError={addedMovieErrorHandler}
-        onAddedMovieSuccess={addedMovieSuccessHandler}
+        onAddingError={addingErrorHandler}
+        onAddingSuccess={addingSuccessHandler}
       />
     );
   } else {
-    if (isFormSuccess) modalHeadingContent = isFormSuccess;
-    else if (isFormError) modalHeadingContent = isFormError;
+    if (isAddingSuccess) modalHeadingContent = isAddingSuccess;
+    else if (isAddingError) modalHeadingContent = isAddingError;
 
     modalBodyContent = (
       <Button primary onClick={toggleModal}>

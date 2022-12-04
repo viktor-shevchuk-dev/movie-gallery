@@ -1,4 +1,4 @@
-const emptyInitialValues = {
+export const initialValues = {
   title: "",
   releaseDate: "",
   posterPath: "",
@@ -7,5 +7,3 @@ const emptyInitialValues = {
   runtime: "",
   overview: "",
 };
-
-export default emptyInitialValues;
