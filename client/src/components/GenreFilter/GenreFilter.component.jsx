@@ -27,7 +27,7 @@ export const GenreFilter = ({ onSetGenreOption }) => {
       ...location,
       search: `${createSearchParams({
         sortBy:
-          new URLSearchParams(location.search).get("sortBy") ?? "release-date",
+          new URLSearchParams(location.search).get("sortBy") ?? "release_date",
         genre: "all",
       })}`,
     });

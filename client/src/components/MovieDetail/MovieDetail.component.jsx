@@ -9,21 +9,22 @@ export const MovieDetail = ({
   runtime,
   posterPath,
   overview,
-}) => {
-  return (
-    <article className={classes["movie-detail"]}>
-      <img src={posterPath} alt={title} className={classes.poster} />
-      <section className={classes["other-details"]}>
-        <Title extraClassName={classes.title}>
-          {title} <span className={classes["vote-average"]}>{voteAverage}</span>
-        </Title>
-        <p className={classes.genres}>{genres.join(" & ")}</p>
-        <p className={classes["release-year-and-runtime"]}>
-          <span className={classes["release-year"]}>{releaseYear}</span>
-          <span>{runtime}</span>
-        </p>
-        <p className={classes.overview}>{overview}</p>
-      </section>
-    </article>
-  );
-};
+}) => (
+  <article className={classes["movie-detail"]}>
+    <img src={posterPath} alt={title} className={classes.poster} />
+    <section className={classes["other-details"]}>
+      <Title extraClassName={classes.title}>
+        {title}
+        {voteAverage && (
+          <span className={classes["vote-average"]}>{voteAverage}</span>
+        )}
+      </Title>
+      <p className={classes.genres}>{genres.join(" & ")}</p>
+      <p className={classes["release-year-and-runtime"]}>
+        <span className={classes["release-year"]}>{releaseYear}</span>
+        {runtime && <span>{runtime}</span>}
+      </p>
+      <p className={classes.overview}>{overview}</p>
+    </section>
+  </article>
+);
