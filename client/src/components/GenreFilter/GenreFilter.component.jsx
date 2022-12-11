@@ -4,6 +4,14 @@ import { useNavigate, useLocation, createSearchParams } from "react-router-dom";
 
 import classes from "./GenreFilter.module.css";
 
+const genresList = [
+  { value: "all", label: "All" },
+  { value: "documentary", label: "Documentary" },
+  { value: "comedy", label: "Comedy" },
+  { value: "horror", label: "Horror" },
+  { value: "crime", label: "Crime" },
+];
+
 export const GenreFilter = ({ onSetGenreOption }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -11,7 +19,7 @@ export const GenreFilter = ({ onSetGenreOption }) => {
 
   const genreOption = genreURLSearchParam ?? "all";
 
-  const onGenreOptionClick = ({ target: { textContent: genre } }) =>
+  const genreClickHandler = ({ target: { textContent: genre } }) =>
     navigate({
       ...location,
       search: `${createSearchParams({
@@ -27,7 +35,7 @@ export const GenreFilter = ({ onSetGenreOption }) => {
       ...location,
       search: `${createSearchParams({
         sortBy:
-          new URLSearchParams(location.search).get("sortBy") ?? "release_date",
+          new URLSearchParams(location.search).get("sortBy") ?? "vote_average",
         genre: "all",
       })}`,
     });
@@ -38,22 +46,12 @@ export const GenreFilter = ({ onSetGenreOption }) => {
   }, [genreOption, onSetGenreOption]);
 
   return (
-    <ul className={classes["genres-filter-list"]} onClick={onGenreOptionClick}>
-      <li>
-        <p>All</p>
-      </li>
-      <li>
-        <p>Documentary</p>
-      </li>
-      <li>
-        <p>Comedy</p>
-      </li>
-      <li>
-        <p>Horror</p>
-      </li>
-      <li>
-        <p>Crime</p>
-      </li>
+    <ul className={classes["genres-filter-list"]} onClick={genreClickHandler}>
+      {genresList.map(({ label, value }) => (
+        <li key={value}>
+          <p>{label}</p>
+        </li>
+      ))}
     </ul>
   );
 };

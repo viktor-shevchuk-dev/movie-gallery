@@ -1,12 +1,23 @@
 export const movieShelf = {
-  query: ({ sortOption, genreOption }) => {
+  query: ({ sortOption, genreOption, searchQuery }) => {
     const endpoint = ["?"];
-    sortOption && endpoint.push(`sortBy=${sortOption}&sortOrder=desc`);
+
+    searchQuery
+      ? endpoint.push(`search=${searchQuery}`)
+      : endpoint.push(`search=`);
+
+    sortOption &&
+      endpoint.push("&") &&
+      endpoint.push(`sortBy=${sortOption}&sortOrder=desc`);
+
     genreOption &&
       genreOption !== "all" &&
-      endpoint.push(`&filter=${genreOption}`);
+      endpoint.push("&") &&
+      endpoint.push(`filter=${genreOption}`);
 
-    return endpoint.join("");
+    const joinedEndpoint = endpoint.join("");
+    // debugger;
+    return joinedEndpoint;
   },
   transformResponse: ({ data: movieShelf }) =>
     movieShelf.map(

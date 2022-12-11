@@ -6,8 +6,11 @@ import { Button } from "components";
 
 import classes from "./SearchMoviesForm.module.css";
 
-export const SearchMoviesForm = ({ onSubmit }) => {
-  const [searchQuery, setSearchQuery] = useState("");
+export const SearchMoviesForm = ({
+  onSubmit,
+  searchQuery: urlSearchParameter,
+}) => {
+  const [searchQuery, setSearchQuery] = useState(urlSearchParameter);
 
   const handleQueryChange = ({ target: { value } }) => {
     setSearchQuery(value.toLowerCase());
@@ -15,6 +18,7 @@ export const SearchMoviesForm = ({ onSubmit }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     if (searchQuery.trim() === "")
       return toast.error("Enter some valid search query please.");
 

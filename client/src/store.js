@@ -20,7 +20,7 @@ const getMiddlewaresList = (getDefaultMiddleware) => {
   if (process.env.NODE_ENV === "development")
     middlewaresList = [
       ...middlewaresList,
-      require("redux-logger").createLogger(),
+      // require("redux-logger").createLogger(),
     ];
 
   return middlewaresList;

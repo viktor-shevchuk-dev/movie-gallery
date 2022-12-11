@@ -5,8 +5,8 @@ import { useNavigate, useLocation, createSearchParams } from "react-router-dom";
 import { SortSelector } from "components";
 
 const sortOptionsList = [
-  { value: "release_date", label: "Release date" },
   { value: "vote_average", label: "Rating" },
+  { value: "release_date", label: "Release date" },
 ];
 
 export const GeneralFilter = ({ onSetSortOption }) => {
@@ -16,7 +16,7 @@ export const GeneralFilter = ({ onSetSortOption }) => {
     "sortBy"
   );
 
-  const sortOption = sortByURLSearchParam ?? "release_date";
+  const sortOption = sortByURLSearchParam ?? "vote_average";
 
   const onSortOptionChange = (option) =>
     navigate({
@@ -34,7 +34,7 @@ export const GeneralFilter = ({ onSetSortOption }) => {
       ...location,
       search: `${createSearchParams({
         genre: new URLSearchParams(location.search).get("genre") ?? "all",
-        sortBy: "release_date",
+        sortBy: "vote_average",
       })}`,
     });
   }, [location, navigate, sortByURLSearchParam]);
