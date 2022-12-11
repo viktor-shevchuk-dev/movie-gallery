@@ -8,7 +8,7 @@ import {
   REGISTER,
 } from "redux-persist";
 
-import { movieShelfApi } from "services/movie-shelf/movie-shelf.api";
+import { movieShelfApi } from "services";
 
 const getMiddlewaresList = (getDefaultMiddleware) => {
   let middlewaresList = getDefaultMiddleware({

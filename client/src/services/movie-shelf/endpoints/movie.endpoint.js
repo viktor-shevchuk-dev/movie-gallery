@@ -1,7 +1,8 @@
-import { convertMinsToHrsMins } from "converters";
+import { convertMinsToHrsMins, convertDateToYear } from "converters";
 
-const movieEndpoint = {
+export const movie = {
   query: (id) => `/${id}`,
+  providesTags: (_, __, id) => [{ type: "movieShelf", id }],
   transformResponse: ({
     title,
     genres,
@@ -15,10 +16,8 @@ const movieEndpoint = {
     genres,
     posterPath,
     overview,
-    voteAverage: voteAverage ? voteAverage : null,
-    releaseYear: new Date(releaseDate).getFullYear(),
+    voteAverage: voteAverage || null,
+    year: convertDateToYear(releaseDate),
     runtime: runtime && convertMinsToHrsMins(runtime),
   }),
 };
-
-export default movieEndpoint;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useGetMovieShelfQuery } from "services/movie-shelf/movie-shelf.api";
+import { useGetMovieShelfQuery } from "services";
 
 import { MoviesList, MovieShelfFilterBar, ErrorBoundary } from "components";
 
@@ -15,14 +15,20 @@ export const Main = () => {
     isLoading,
     isError,
     error,
-  } = useGetMovieShelfQuery({ genreOption, sortOption });
+  } = useGetMovieShelfQuery(
+    { genreOption, sortOption },
+    { skip: !genreOption || !sortOption }
+  );
+
+  const setSortOptionHandler = (sortOption) => setSortOption(sortOption);
+  const setGenreOptionHandler = (genre) => setGenreOption(genre);
 
   return (
     <main className={classes.main}>
       <div className={`container ${classes["movie-shelf"]}`}>
         <MovieShelfFilterBar
-          onSetSortOption={(sortOption) => setSortOption(sortOption)}
-          onSetGenreOption={(genre) => setGenreOption(genre)}
+          onSetSortOption={setSortOptionHandler}
+          onSetGenreOption={setGenreOptionHandler}
         />
         {isLoading && <p>Loading...</p>}
         {isError && <p>{error.message}</p>}

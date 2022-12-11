@@ -6,16 +6,30 @@ import classes from "./MoviesList.module.css";
 
 export const MoviesList = ({ moviesList }) => (
   <ul className={classes["movies-list"]}>
-    {moviesList.map(({ id, poster_path, genres, title, release_date }) => (
-      <MovieCard
-        key={id}
-        id={id}
-        src={poster_path}
-        title={title}
-        genresList={genres}
-        year={new Date(release_date).getFullYear()}
-      />
-    ))}
+    {moviesList.map(
+      ({
+        id,
+        genres,
+        title,
+        runtime,
+        overview,
+        voteAverage,
+        posterPath,
+        releaseDate,
+      }) => (
+        <MovieCard
+          key={id}
+          id={id}
+          genres={genres}
+          title={title}
+          runtime={runtime}
+          overview={overview}
+          voteAverage={voteAverage}
+          posterPath={posterPath}
+          releaseDate={releaseDate}
+        />
+      )
+    )}
   </ul>
 );
 

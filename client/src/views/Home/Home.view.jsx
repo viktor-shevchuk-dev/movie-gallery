@@ -11,22 +11,60 @@ import {
   Button,
   Modal,
   Title,
-  Form,
+  BaseForm,
 } from "components";
 
 export const Home = () => {
   const [showModal, setShowModal] = useState(false);
 
-  const toggleModal = () => setShowModal((showModal) => !showModal);
+  const [isAddingSuccess, setIsAddingSuccess] = useState(false);
+  const [isAddingError, setIsAddingError] = useState(false);
+
+  const toggleModal = () => {
+    setShowModal((showModal) => !showModal);
+
+    setIsAddingSuccess(false);
+    setIsAddingError(false);
+  };
+
+  const addingErrorHandler = (error) => {
+    console.log(error);
+    setIsAddingError("Sth went wrong.");
+  };
+
+  const addingSuccessHandler = (title) =>
+    setIsAddingSuccess(`${title} was successfully added to the movie library.`);
+
+  let modalBodyContent, modalHeadingContent;
+
+  if (!isAddingSuccess && !isAddingError) {
+    modalHeadingContent = "Add movie";
+    modalBodyContent = (
+      <BaseForm
+        onAddingError={addingErrorHandler}
+        onAddingSuccess={addingSuccessHandler}
+      />
+    );
+  } else {
+    if (isAddingSuccess) modalHeadingContent = isAddingSuccess;
+    else if (isAddingError) modalHeadingContent = isAddingError;
+
+    modalBodyContent = (
+      <Button primary onClick={toggleModal}>
+        OK
+      </Button>
+    );
+  }
 
   return (
     <>
       {showModal && (
         <Modal onClose={toggleModal}>
-          <Title>Add movie</Title>
-          <Form />
+          <Title>{modalHeadingContent}</Title>
+          {modalBodyContent}
         </Modal>
       )}
+
       <Header extraClassName={classes["home-header"]}>
         <MainHeader>
           <Button secondary onClick={toggleModal}>
