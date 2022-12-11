@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import PropTypes from "prop-types";
 
@@ -6,23 +7,25 @@ import { Button } from "components";
 
 import classes from "./SearchMoviesForm.module.css";
 
-export const SearchMoviesForm = ({
-  onSubmit,
-  searchQuery: urlSearchParameter,
-}) => {
-  const [searchQuery, setSearchQuery] = useState(urlSearchParameter);
+export const SearchMoviesForm = () => {
+  const { searchQuery: urlSearchParameter } = useParams();
 
-  const handleQueryChange = ({ target: { value } }) => {
+  const [searchQuery, setSearchQuery] = useState(
+    () => urlSearchParameter ?? ""
+  );
+
+  const navigate = useNavigate();
+
+  const handleQueryChange = ({ target: { value } }) =>
     setSearchQuery(value.toLowerCase());
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (searchQuery.trim() === "")
-      return toast.error("Enter some valid search query please.");
+      return toast.error("Enter some valid search query, please.");
 
-    onSubmit(searchQuery);
+    navigate(`/search/${searchQuery}`);
 
     setSearchQuery("");
   };

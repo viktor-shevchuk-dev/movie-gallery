@@ -15,35 +15,24 @@ const genresList = [
 export const GenreFilter = ({ onSetGenreOption }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const genreURLSearchParam = new URLSearchParams(location.search).get("genre");
+  const { search } = location;
+  const genreURLSearchParam = new URLSearchParams(search).get("genre");
 
-  const genreOption = genreURLSearchParam ?? "all";
+  const genreClickHandler = ({ target: { textContent: genre } }) => {
+    const searchParams = { genre: genre.toLowerCase() };
+    const sortBySearchParam = new URLSearchParams(search).get("sortBy");
 
-  const genreClickHandler = ({ target: { textContent: genre } }) =>
-    navigate({
-      ...location,
-      search: `${createSearchParams({
-        genre: genre.toLowerCase(),
-        sortBy: new URLSearchParams(location.search).get("sortBy"),
-      })}`,
-    });
-
-  useEffect(() => {
-    if (genreURLSearchParam !== null) return;
+    if (sortBySearchParam) searchParams.sortBy = sortBySearchParam;
 
     navigate({
       ...location,
-      search: `${createSearchParams({
-        sortBy:
-          new URLSearchParams(location.search).get("sortBy") ?? "vote_average",
-        genre: "all",
-      })}`,
+      search: `${createSearchParams(searchParams)}`,
     });
-  }, [genreURLSearchParam, location, navigate]);
+  };
 
   useEffect(() => {
-    onSetGenreOption(genreOption);
-  }, [genreOption, onSetGenreOption]);
+    onSetGenreOption(genreURLSearchParam);
+  }, [genreURLSearchParam, onSetGenreOption]);
 
   return (
     <ul className={classes["genres-filter-list"]} onClick={genreClickHandler}>

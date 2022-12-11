@@ -131,7 +131,7 @@ export const MovieCard = ({
       )}
       <li className={classes["movie-card"]}>
         <Link
-          to={`/${id}`}
+          to={`/movies/${id}`}
           className={classes.link}
           onClick={handleMovieCardLinkClick}
         >

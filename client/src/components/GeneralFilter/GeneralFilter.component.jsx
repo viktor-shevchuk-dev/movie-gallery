@@ -12,42 +12,30 @@ const sortOptionsList = [
 export const GeneralFilter = ({ onSetSortOption }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const sortByURLSearchParam = new URLSearchParams(location.search).get(
-    "sortBy"
-  );
+  const { search } = location;
+  const sortByURLSearchParam = new URLSearchParams(search).get("sortBy");
 
-  const sortOption = sortByURLSearchParam ?? "vote_average";
+  const onSortOptionChange = (option) => {
+    const searchParams = { sortBy: option };
+    const genreSearchParam = new URLSearchParams(search).get("genre");
 
-  const onSortOptionChange = (option) =>
-    navigate({
-      ...location,
-      search: `${createSearchParams({
-        sortBy: option,
-        genre: new URLSearchParams(location.search).get("genre"),
-      })}`,
-    });
-
-  useEffect(() => {
-    if (sortByURLSearchParam !== null) return;
+    if (genreSearchParam) searchParams.genre = genreSearchParam;
 
     navigate({
       ...location,
-      search: `${createSearchParams({
-        genre: new URLSearchParams(location.search).get("genre") ?? "all",
-        sortBy: "vote_average",
-      })}`,
+      search: `${createSearchParams(searchParams)}`,
     });
-  }, [location, navigate, sortByURLSearchParam]);
+  };
 
   useEffect(() => {
-    onSetSortOption(sortOption);
-  }, [onSetSortOption, sortOption]);
+    onSetSortOption(sortByURLSearchParam);
+  }, [onSetSortOption, sortByURLSearchParam]);
 
   return (
     <SortSelector
       options={sortOptionsList}
       onChange={onSortOptionChange}
-      value={sortOption}
+      value={sortByURLSearchParam ?? "vote_average"}
       label="Sort by"
     />
   );

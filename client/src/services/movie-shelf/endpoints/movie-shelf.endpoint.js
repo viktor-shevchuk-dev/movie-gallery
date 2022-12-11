@@ -16,7 +16,7 @@ export const movieShelf = {
       endpoint.push(`filter=${genreOption}`);
 
     const joinedEndpoint = endpoint.join("");
-    // debugger;
+
     return joinedEndpoint;
   },
   transformResponse: ({ data: movieShelf }) =>

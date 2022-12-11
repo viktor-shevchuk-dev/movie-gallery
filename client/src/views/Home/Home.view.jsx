@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-  useNavigate,
-  useLocation,
-  createSearchParams,
-  useParams,
-} from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import classes from "./Home.module.css";
 
@@ -20,23 +15,8 @@ import {
   BaseForm,
 } from "components";
 
-import { useGetMovieShelfQuery } from "services";
-
 export const Home = () => {
-  const [genreOption, setGenreOption] = useState();
-  const [sortOption, setSortOption] = useState();
-
-  const { searchQuery } = useParams();
-
-  const {
-    data: movieShelf,
-    isLoading,
-    isError,
-    error,
-  } = useGetMovieShelfQuery(
-    { genreOption, sortOption, searchQuery },
-    { skip: !genreOption || !sortOption }
-  );
+  const { searchQuery: urlSearchParameter } = useParams();
 
   const [showModal, setShowModal] = useState(false);
 
@@ -94,16 +74,9 @@ export const Home = () => {
             + Add Movie
           </Button>
         </MainHeader>
-        <FindMovie searchQuery={searchQuery} />
+        <FindMovie />
       </Header>
-      <Main
-        onSetSortOption={setSortOption}
-        onSetGenreOption={setGenreOption}
-        isLoading={isLoading}
-        isError={isError}
-        error={error}
-        movieShelf={movieShelf}
-      />
+      <Main searchQuery={urlSearchParameter} />
       <Footer />
     </>
   );
