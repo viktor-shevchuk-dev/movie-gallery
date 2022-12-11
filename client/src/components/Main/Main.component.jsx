@@ -20,15 +20,12 @@ export const Main = () => {
     { skip: !genreOption || !sortOption }
   );
 
-  const setSortOptionHandler = (sortOption) => setSortOption(sortOption);
-  const setGenreOptionHandler = (genre) => setGenreOption(genre);
-
   return (
     <main className={classes.main}>
       <div className={`container ${classes["movie-shelf"]}`}>
         <MovieShelfFilterBar
-          onSetSortOption={setSortOptionHandler}
-          onSetGenreOption={setGenreOptionHandler}
+          onSetSortOption={setSortOption}
+          onSetGenreOption={setGenreOption}
         />
         {isLoading && <p>Loading...</p>}
         {isError && <p>{error.message}</p>}

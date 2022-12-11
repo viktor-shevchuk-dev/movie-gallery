@@ -75,23 +75,24 @@ export const MovieCard = ({
   if (!isEditingSuccess && !isEditingError) {
     if (optionValue.value === "edit") {
       modalHeadingContent = "Edit";
+      const movieToEdit = {
+        title,
+        id,
+        posterPath,
+        releaseDate,
+        overview,
+        runtime,
+        voteAverage,
+        genres: genres.map((genre) => ({
+          value: genre.toLowerCase(),
+          label: genre,
+        })),
+      };
       modalBodyContent = (
         <BaseForm
           onEditingError={editingErrorHandler}
           onEditingSuccess={editingSuccessHandler}
-          movieToEdit={{
-            title,
-            id,
-            posterPath,
-            releaseDate,
-            overview,
-            runtime,
-            voteAverage,
-            genres: genres.map((genre) => ({
-              value: genre.toLowerCase(),
-              label: genre,
-            })),
-          }}
+          movieToEdit={movieToEdit}
         />
       );
     } else {
