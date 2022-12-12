@@ -1,4 +1,5 @@
-import { useNavigate, useLocation, createSearchParams } from "react-router-dom";
+import { useLocation, createSearchParams, Link } from "react-router-dom";
+import classNames from "classnames/bind";
 
 import classes from "./GenreFilter.module.css";
 
@@ -11,27 +12,41 @@ const genresList = [
 ];
 
 export const GenreFilter = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const { search } = location;
+  const sortBySearchParam = new URLSearchParams(search).get("sortBy");
+  const genreSearchParam = new URLSearchParams(search).get("genre");
 
-  const genreClickHandler = ({ target: { textContent: genre } }) => {
-    const searchParams = { genre: genre.toLowerCase() };
-    const sortBySearchParam = new URLSearchParams(search).get("sortBy");
+  const createSearch = (genre) => {
+    const searchParams = { genre };
 
     if (sortBySearchParam) searchParams.sortBy = sortBySearchParam;
 
-    navigate({
-      ...location,
-      search: `${createSearchParams(searchParams)}`,
-    });
+    return `${createSearchParams(searchParams)}`;
   };
 
+  const getIsActive = (value) =>
+    genreSearchParam === value || (value === "all" && !genreSearchParam);
+
   return (
-    <ul className={classes["genres-filter-list"]} onClick={genreClickHandler}>
+    <ul className={classes["genres-filter-list"]}>
       {genresList.map(({ label, value }) => (
-        <li key={value}>
-          <p>{label}</p>
+        <li
+          key={value}
+          className={classNames.bind(classes)({
+            isActive: getIsActive(value),
+          })}
+        >
+          <p>
+            <Link
+              to={{
+                ...location,
+                search: createSearch(value),
+              }}
+            >
+              {label}
+            </Link>
+          </p>
         </li>
       ))}
     </ul>

@@ -3,22 +3,30 @@
   margin: 0;
 }
 
+.genres-filter-list li {
+  padding-bottom: 19px;
+}
+
 .genres-filter-list li:not(:last-child) {
   margin-right: 30px;
 }
 
+.genres-filter-list li.isActive {
+  box-shadow: 0 3px 0 #f65261;
+}
+
 .genres-filter-list p {
   margin: 0;
+}
+
+.genres-filter-list a {
+  text-decoration: none;
   font-family: Montserrat;
   font-size: 16px;
   font-weight: 500;
   line-height: 20px;
   text-transform: uppercase;
   color: #ffffff;
-}
-
-.underline {
-  color: red;
 }
 
 @media screen and (min-width: 1024px) {
