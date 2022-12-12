@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 
 import classes from "./Home.module.css";
 
@@ -16,8 +15,6 @@ import {
 } from "components";
 
 export const Home = () => {
-  const { searchQuery: urlSearchParameter } = useParams();
-
   const [showModal, setShowModal] = useState(false);
 
   const [isAddingSuccess, setIsAddingSuccess] = useState(false);
@@ -76,7 +73,7 @@ export const Home = () => {
         </MainHeader>
         <FindMovie />
       </Header>
-      <Main searchQuery={urlSearchParameter} />
+      <Main />
       <Footer />
     </>
   );
