@@ -1,18 +1,18 @@
 {
-  "name": "netflix-roulette",
+  "name": "movie-gallery",
   "version": "1.0.0",
   "description": "Movies project.",
   "main": "index.js",
   "scripts": {
     "install-server": "cd server && npm install",
-    "install-client": "cd client && npm install",
+    "install-client": "cd client && yarn",
     "install": "npm i concurrently --save-dev && npm run install-client && npm run install-server",
     "server": "npm run watch --prefix server",
     "client": "npm start --prefix client",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "deploy": "npm run build --prefix client && npm start --prefix server",
     "test": "npm test --prefix server && npm test --prefix client",
-    "prepare": "husky install"
+    "prepare": "npx mrm lint-staged && husky install"
   },
   "keywords": [],
   "author": "",
@@ -27,20 +27,22 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.2",
     "prettier": "^2.7.1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Victor-page/netflix-roulette.git"
+    "url": "git+https://github.com/viktor-shevchuk-dev/movie-gallery.git"
   },
   "bugs": {
-    "url": "https://github.com/Victor-page/netflix-roulette/issues"
+    "url": "https://github.com/viktor-shevchuk-dev/movie-gallery/issues"
   },
-  "homepage": "https://github.com/Victor-page/netflix-roulette#readme",
+  "homepage": "https://github.com/viktor-shevchuk-dev/movie-gallery#readme",
   "lint-staged": {
     "*.{js,mjs,jsx}": "eslint --cache --fix",
-    "*.{js,mjs,jsx,ts,tsx,css,scss,md}": "prettier --write"
+    "*.{js,mjs,jsx,ts,tsx,css,scss,md}": "prettier --write",
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
   }
 }
