@@ -5,13 +5,9 @@ describe('Utilites :: presentMovies', function () {
 
   beforeEach(() => {
     defaultCtx = {
-      query: { offset: 0, limit: 10 },
+      query: { offset: 0, limit: 100 },
       state: {
-        Movies: [
-          { field1: '1' },
-          { field1: '2' },
-          { field1: '3' },
-        ],
+        Movies: [{ field1: '1' }, { field1: '2' }, { field1: '3' }],
         totalAmount: 3,
       },
     }
@@ -25,14 +21,10 @@ describe('Utilites :: presentMovies', function () {
     const data = presentMovies(defaultCtx)
 
     expect(data).toEqual({
-      data: [
-        {},
-        {},
-        {},
-      ],
+      data: [{}, {}, {}],
       total: 3,
       offset: 0,
-      limit: 10,
+      limit: 100,
     })
   })
 })
