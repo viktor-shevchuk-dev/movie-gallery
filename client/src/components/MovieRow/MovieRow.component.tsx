@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef } from "react";
 
 import { MovieCard } from "components";
-import { Movie } from "types/Movie.type";
+import { Movie } from "types";
 
 import classes from "./MovieRow.module.css";
 
@@ -28,14 +28,14 @@ export const MovieRow: FC<MovieRowProps> = ({
     <ul className={classes["movie-row"]}>
       {movies.map(({ id, poster_path, genres, title, release_date }, index) => {
         const isActive = isActiveRow && activeCardIndex === index;
+        const movieContainerClasses = [classes["movie-card"]];
+        isActive && movieContainerClasses.push(classes.active);
 
         return (
           <li
             ref={isActive ? activeCardRef : null}
             key={id}
-            className={`${classes["movie-card"]} ${
-              isActive ? classes.active : ""
-            }`}
+            className={movieContainerClasses.join(" ")}
           >
             <MovieCard
               src={poster_path}

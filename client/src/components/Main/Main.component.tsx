@@ -2,32 +2,11 @@ import { FC, useState, useEffect } from "react";
 
 import { ErrorBoundary, MovieGrid } from "components";
 
-import { Movie } from "types/Movie.type";
-import { MovieGallery } from "types/MovieGallery.type";
+import { categorizeMoviesByGenre } from "utils";
+import { MovieGallery, Status } from "types";
+import { fetchMovies } from "services";
 
 import classes from "./Main.module.css";
-
-import { fetchMovies } from "services/movieshelfApi";
-
-import { Status } from "types/Status.type";
-
-interface GenreCategories {
-  [key: string]: Movie[];
-}
-
-const categorizeMoviesByGenre = (movies: Movie[]) => {
-  const genreCategories: GenreCategories = {};
-  movies.forEach((movie) => {
-    movie.genres.forEach((genre) => {
-      if (!genreCategories[genre]) {
-        genreCategories[genre] = [];
-      }
-      genreCategories[genre].push(movie);
-    });
-  });
-
-  return genreCategories;
-};
 
 export const Main: FC = () => {
   const [movies, setMovies] = useState<MovieGallery>([]);

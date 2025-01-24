@@ -1,3 +1,3 @@
-import { Movie } from "types/Movie.type";
+import { Movie } from "types";
 
 export type MovieGallery = [string, Movie[]][];

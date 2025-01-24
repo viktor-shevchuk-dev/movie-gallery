@@ -1,9 +1,7 @@
 import { FC, useState, useEffect, useCallback } from "react";
 
 import { MovieRow } from "components";
-
-import { MovieGallery } from "types/MovieGallery.type";
-import { KeyCode } from "types/KeyCode.type";
+import { MovieGallery, KeyDownCode } from "types";
 
 import classes from "./MovieGrid.module.css";
 
@@ -19,36 +17,32 @@ export const MovieGrid: FC<MovieGridProps> = ({ movieGallery }) => {
 
   const handleKeyDown = useCallback(
     ({ code }: KeyboardEvent) => {
-      const activeRowLength = movieGallery[activeRowIndex][1].length;
-      const updateIndex = (current: number, delta: number) =>
-        (current + delta + activeRowLength) % activeRowLength;
-
       switch (code) {
-        case KeyCode.DOWN:
+        case KeyDownCode.DOWN:
           setActiveRowIndex((prevActiveRowIndex) =>
             Math.min(prevActiveRowIndex + 1, movieGallery.length - 1)
           );
           break;
-        case KeyCode.UP:
+        case KeyDownCode.UP:
           setActiveRowIndex((prevActiveRowIndex) =>
             Math.max(prevActiveRowIndex - 1, 0)
           );
           break;
-        case KeyCode.RIGHT:
-          setActiveCardIndices((prevActiveCardIndices) =>
-            prevActiveCardIndices.map((prevActiveCardIndex, idx) =>
+        case KeyDownCode.RIGHT:
+        case KeyDownCode.LEFT:
+          const activeRowLength = movieGallery[activeRowIndex][1].length;
+          const delta = code === KeyDownCode.RIGHT ? 1 : -1;
+          const getUpdatedIndex = (
+            current: number,
+            delta: number,
+            length: number
+          ) => (current + delta + length) % length;
+
+          setActiveCardIndices((prevIndices) =>
+            prevIndices.map((index, idx) =>
               idx === activeRowIndex
-                ? updateIndex(prevActiveCardIndex, 1)
-                : prevActiveCardIndex
-            )
-          );
-          break;
-        case KeyCode.LEFT:
-          setActiveCardIndices((prevActiveCardIndices) =>
-            prevActiveCardIndices.map((prevActiveCardIndex, idx) =>
-              idx === activeRowIndex
-                ? updateIndex(prevActiveCardIndex, -1)
-                : prevActiveCardIndex
+                ? getUpdatedIndex(index, delta, activeRowLength)
+                : index
             )
           );
           break;
@@ -70,13 +64,12 @@ export const MovieGrid: FC<MovieGridProps> = ({ movieGallery }) => {
   return (
     <ul>
       {movieGallery.map(([genre, movieRow], index) => {
-        const isActiveRow = index === activeRowIndex;
         return (
           <li className={classes.category} key={genre}>
             <h2 className={classes["genre-title"]}>{genre}</h2>
             <MovieRow
               movies={movieRow}
-              isActiveRow={isActiveRow}
+              isActiveRow={index === activeRowIndex}
               activeCardIndex={activeCardIndices[activeRowIndex]}
             />
           </li>
