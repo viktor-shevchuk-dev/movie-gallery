@@ -13,7 +13,6 @@ export const useFetchMovies = () => {
     try {
       setStatus(Status.PENDING);
       const { data } = await API.fetchMovies();
-      console.log(data);
       const movies = Object.entries(categorizeMoviesByGenre(data));
       setMovies(movies);
       setStatus(Status.RESOLVED);
