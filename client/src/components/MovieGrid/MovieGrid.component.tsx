@@ -1,7 +1,8 @@
-import { FC, useState, useEffect, useCallback } from "react";
+import { FC } from "react";
 
 import { MovieRow } from "components";
-import { MovieGallery, KeyDownCode } from "types";
+import { MovieGallery } from "types";
+import { useKeyboardNavigation } from "hooks";
 
 import classes from "./MovieGrid.module.css";
 
@@ -10,56 +11,8 @@ interface MovieGridProps {
 }
 
 export const MovieGrid: FC<MovieGridProps> = ({ movieGallery }) => {
-  const [activeRowIndex, setActiveRowIndex] = useState(0);
-  const [activeCardIndices, setActiveCardIndices] = useState<number[]>(() =>
-    Array(movieGallery.length).fill(0)
-  );
-
-  const handleKeyDown = useCallback(
-    ({ code }: KeyboardEvent) => {
-      switch (code) {
-        case KeyDownCode.DOWN:
-          setActiveRowIndex((prevActiveRowIndex) =>
-            Math.min(prevActiveRowIndex + 1, movieGallery.length - 1)
-          );
-          break;
-        case KeyDownCode.UP:
-          setActiveRowIndex((prevActiveRowIndex) =>
-            Math.max(prevActiveRowIndex - 1, 0)
-          );
-          break;
-        case KeyDownCode.RIGHT:
-        case KeyDownCode.LEFT:
-          const activeRowLength = movieGallery[activeRowIndex][1].length;
-          const delta = code === KeyDownCode.RIGHT ? 1 : -1;
-          const getUpdatedIndex = (
-            current: number,
-            delta: number,
-            length: number
-          ) => (current + delta + length) % length;
-
-          setActiveCardIndices((prevIndices) =>
-            prevIndices.map((index, idx) =>
-              idx === activeRowIndex
-                ? getUpdatedIndex(index, delta, activeRowLength)
-                : index
-            )
-          );
-          break;
-        default:
-          break;
-      }
-    },
-    [activeRowIndex, movieGallery]
-  );
-
-  useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [handleKeyDown]);
+  const { activeRowIndex, activeCardIndices } =
+    useKeyboardNavigation(movieGallery);
 
   return (
     <ul>

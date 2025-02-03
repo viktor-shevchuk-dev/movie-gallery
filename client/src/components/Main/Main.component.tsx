@@ -1,31 +1,13 @@
-import { FC, useState, useEffect } from "react";
+import { FC } from "react";
 
 import { ErrorBoundary, MovieGrid } from "components";
-
-import { categorizeMoviesByGenre } from "utils";
-import { MovieGallery, Status } from "types";
-import { fetchMovies } from "services";
+import { Status } from "types";
+import { useFetchMovies } from "hooks";
 
 import classes from "./Main.module.css";
 
 export const Main: FC = () => {
-  const [movies, setMovies] = useState<MovieGallery>([]);
-  const [status, setStatus] = useState(Status.IDLE);
-  const [error, setError] = useState<Error | null>(null);
-
-  useEffect(() => {
-    setStatus(Status.PENDING);
-    fetchMovies()
-      .then(({ data }) => {
-        const movies = Object.entries(categorizeMoviesByGenre(data));
-        setMovies(movies);
-        setStatus(Status.RESOLVED);
-      })
-      .catch((error) => {
-        setError(error);
-        setStatus(Status.REJECTED);
-      });
-  }, []);
+  const { movies, status, error } = useFetchMovies();
 
   return (
     <main>

@@ -19,9 +19,7 @@ export const MovieRow: FC<MovieRowProps> = ({
   const activeCardRef = useRef<HTMLLIElement | null>(null);
 
   useEffect(() => {
-    if (activeCardRef.current) {
-      activeCardRef.current.scrollIntoView({ block: "nearest" });
-    }
+    activeCardRef.current?.scrollIntoView({ block: "nearest" });
   }, [activeCardIndex, isActiveRow]);
 
   return (
