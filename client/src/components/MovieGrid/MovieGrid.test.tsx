@@ -1,14 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { MovieGrid } from "components";
-import { useKeyboardNavigation } from "hooks";
 import { MovieGallery } from "types";
-
-jest.mock("../../hooks/useKeyboardNavigation.hook", () => ({
-  useKeyboardNavigation: () => ({
-    activeRowIndex: 1,
-    activeCardIndices: [0, 2, 0],
-  }),
-}));
 
 const mockMovieGallery: MovieGallery = [
   [
@@ -57,17 +49,17 @@ const mockMovieGallery: MovieGallery = [
 ];
 
 describe("MovieGrid", () => {
+  beforeEach(() => {
+    window.HTMLElement.prototype.scrollIntoView = jest.fn();
+  });
+
   it("renders a list of genres and corresponding MovieRows", () => {
     render(<MovieGrid movieGallery={mockMovieGallery} />);
 
-    // // Check genre headings
-    // expect(screen.getByText('Action')).toBeInTheDocument();
-    // expect(screen.getByText('Comedy')).toBeInTheDocument();
-    // expect(screen.getByText('Drama')).toBeInTheDocument();
+    expect(screen.getAllByRole("listitem")).toHaveLength(7);
 
-    // // Check that it renders all MovieRow items
-    // // We can check by list item role if needed
-    // const categoryItems = screen.getAllByRole('listitem');
-    // expect(categoryItems.length).toBe(3);
+    expect(screen.getByRole("heading", { name: "Action" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Comedy" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Drama" })).toBeInTheDocument();
   });
 });
