@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { MovieGrid } from "components";
 import { MovieGallery } from "types";
 
