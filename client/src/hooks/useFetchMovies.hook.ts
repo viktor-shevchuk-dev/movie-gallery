@@ -13,7 +13,9 @@ export const useFetchMovies = () => {
     try {
       setStatus(Status.PENDING);
       const { data } = await API.fetchMovies();
+      console.log({ raw: data });
       const movies = Object.entries(categorizeMoviesByGenre(data));
+      console.log({ normalized: movies });
       setMovies(movies);
       setStatus(Status.RESOLVED);
     } catch (error) {

@@ -12,31 +12,34 @@ export const useKeyboardNavigation = (movieGallery: MovieGallery) => {
     ({ code }: KeyboardEvent) => {
       switch (code) {
         case KeyDownCode.DOWN:
+          const maxValidRowIndex = movieGallery.length - 1;
           setActiveRowIndex((prev) => {
-            const rowCount = movieGallery.length;
-            return Math.min(prev + 1, rowCount - 1);
+            const nextRowIndex = prev + 1;
+            return Math.min(nextRowIndex, maxValidRowIndex);
           });
           break;
+
         case KeyDownCode.UP:
-          setActiveRowIndex((prev) => Math.max(prev - 1, 0));
+          setActiveRowIndex((prev) => {
+            const previousRowIndex = prev - 1;
+            return Math.max(previousRowIndex, 0);
+          });
           break;
+
         case KeyDownCode.RIGHT:
         case KeyDownCode.LEFT:
           const activeRowLength = movieGallery[activeRowIndex][1].length;
           const delta = code === KeyDownCode.RIGHT ? 1 : -1;
-          const getUpdatedIndex = (
-            current: number,
-            delta: number,
-            rowLength: number
-          ) => (current + delta + rowLength) % rowLength;
 
-          setActiveCardIndices((prevIndices) =>
-            prevIndices.map((index, idx) =>
-              idx === activeRowIndex
-                ? getUpdatedIndex(index, delta, activeRowLength)
-                : index
-            )
-          );
+          setActiveCardIndices((prevIndices) => {
+            const currentCardIndex = prevIndices[activeRowIndex];
+            const newCardIndex =
+              (currentCardIndex + delta + activeRowLength) % activeRowLength;
+
+            return prevIndices.map((index, idx) =>
+              idx === activeRowIndex ? newCardIndex : index
+            );
+          });
           break;
         default:
           break;
